@@ -38,22 +38,20 @@ compile:
 
 # Execution
 run:
-	@echo "🔍 Recherche des classes contenant un point d'entrée..."
-	@find $(BIN_DIR) -name "*.class" | sed 's|$(BIN_DIR)/||;s|.class||' > class_list.tmp
-	@grep -l "public static void main" $(SRC_DIR)/*.java | sed 's|$(SRC_DIR)/||;s|.java||' > main_classes.tmp
+	@echo "🚀 Recherche des fichiers dans TestsProjet/*..."
+	@ls TestsProjet/* 2>/dev/null | nl > test_files.tmp
 
-	@if [ -s main_classes.tmp ]; then \
-		echo "🚀 Classes exécutables détectées :"; \
-		cat main_classes.tmp | nl; \
-		echo "🔢 Choisissez un numéro pour exécuter une classe :"; \
+	@if [ -s test_files.tmp ]; then \
+		echo "📂 Fichiers disponibles :"; \
+		cat test_files.tmp; \
+		echo "🔢 Choisissez un numéro pour exécuter un fichier :"; \
 		read choice; \
-		main_class=$$(sed "$$choice!d" main_classes.tmp); \
-		rm main_classes.tmp;\
-		rm class_list.tmp;\
-		echo "▶ Exécution de $$main_class..."; \
-		$(JAVA) -cp "$(CP)" $$main_class; \
+		selected_file=$$(sed "$$choice!d" test_files.tmp | awk '{print $$2}'); \
+		rm test_files.tmp; \
+		echo "▶ Exécution avec $$selected_file..."; \
+		src/g2java.sh $$selected_file; \
 	else \
-		echo "❌ Aucune classe avec main détectée."; \
+		echo "❌ Aucun fichier trouvé dans TestsProjet."; \
 	fi
 
 # Clean
