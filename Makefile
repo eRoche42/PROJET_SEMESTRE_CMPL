@@ -31,6 +31,8 @@ compile:
 	@mkdir -p $(BIN_DIR)  # Check bin
 	@find $(SRC_DIR) -name "*.java" > sources.tmp  # Liste tous les fichiers Java
 	@$(JAVAC) -cp "$(CP)" -d $(BIN_DIR) @sources.tmp
+	@echo "🔨 Génération du code en cours..."
+	@src/g2java.sh src/projet.g  # Exécute le script avec projet.g
 	@rm sources.tmp
 	@echo "✅ Compilation terminée."
 
