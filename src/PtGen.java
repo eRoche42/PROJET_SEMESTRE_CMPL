@@ -22,6 +22,8 @@
 
 import java.io.*;
 
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 /**
  * classe de mise en oeuvre du compilateur
  * =======================================
@@ -117,7 +119,7 @@ public class PtGen {
     // -------------------------
     
  // MERCI de renseigner ici un nom pour le trinome, constitue EXCLUSIVEMENT DE LETTRES
-    public static String trinome="XxxYyyZzz"; 	//TODO 
+    public static String trinome="ROCHE_RIO"; 	//TODO 
     
     private static int tCour; // type de l'expression compilee
     private static int vCour; // sert uniquement lors de la compilation d'une valeur (entiere ou boolenne)
@@ -131,6 +133,8 @@ public class PtGen {
     // it = indice de remplissage de tabSymb
     // bc = bloc courant (=1 si le bloc courant est le programme principal)
 	private static int it, bc;
+
+	private static int iAddrExec ;
 	
 	/** 
 	 * utilitaire de recherche de l'ident courant (ayant pour code UtilLex.numIdCourant) dans tabSymb
@@ -210,7 +214,7 @@ public class PtGen {
 		// initialisation du type de l'expression courante
 		tCour = NEUTRE;
 
-		//TODO si necessaire
+		iAddrExec = 0;
 
 	} // initialisations
 
@@ -225,9 +229,50 @@ public class PtGen {
 		case 0:
 			initialisations();
 			break;
-		
-		// TODO
-			
+
+		// Déclarations (penser à afficher tabSymb pour vérifier)
+
+		// CONSTANTE
+		case 1 :
+			if( presentIdent(1)>0 ) {
+				UtilLex.messErr("Réaffectation de constantes interdite"); // Envoi Erreur
+				break;
+			}
+			placeIdent(UtilLex.numIdCourant, CONSTANTE, tCour, vCour);
+			afftabSymb();
+			break;
+
+		// VARGLOBALE
+		case 2 :
+			if( presentIdent(1)>0 ) {
+				UtilLex.messErr("Ident déjà déclaré"); // Envoi Erreur
+				break;
+			}
+			placeIdent(UtilLex.numIdCourant, VARGLOBALE, tCour, iAddrExec++);
+			afftabSymb();
+			break;
+		// LIRE Const ENT Positif
+		case 3 :
+			vCour = UtilLex.valEnt;
+			break;
+
+		// LIRE Const ENT Négatif
+		case 4:
+			vCour = -UtilLex.valEnt;
+			break;
+		// LIRE BOOL
+		case 5:
+			vCour = UtilLex.valEnt;
+			break;
+
+		// TYPE
+		case 6:
+			tCour = ENT;
+			break;
+		case 7:
+			tCour = BOOL;
+			break;
+
 		case 255 : 
 			afftabSymb(); // affichage de la table des symboles en fin de compilation
 			break;
