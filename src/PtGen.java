@@ -239,7 +239,6 @@ public class PtGen {
 				break;
 			}
 			placeIdent(UtilLex.numIdCourant, CONSTANTE, tCour, vCour);
-			afftabSymb();
 			break;
 
 		// VARGLOBALE
@@ -249,7 +248,6 @@ public class PtGen {
 				break;
 			}
 			placeIdent(UtilLex.numIdCourant, VARGLOBALE, tCour, iAddrExec++);
-			afftabSymb();
 			break;
 		// LIRE Const ENT Positif
 		case 3 :
@@ -260,19 +258,23 @@ public class PtGen {
 		case 4:
 			vCour = -UtilLex.valEnt;
 			break;
-		// LIRE BOOL
+		// LIRE BOOL TRUE
 		case 5:
-			vCour = UtilLex.valEnt;
+			vCour = VRAI;
 			break;
-
-		// TYPE
+		// LIRE BOOL FALSE
 		case 6:
+			vCour = FAUX;
+			break;
+		// TYPE
+		case 7:
 			tCour = ENT;
 			break;
-		case 7:
+		case 8:
 			tCour = BOOL;
 			break;
 
+		
 		case 255 : 
 			afftabSymb(); // affichage de la table des symboles en fin de compilation
 			break;

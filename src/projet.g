@@ -70,8 +70,8 @@ consts  : 'const' ( ident  '=' valeur {PtGen.pt(1);} ptvg  )+
 vars  : 'var' ( type ident {PtGen.pt(2);} ( ','  ident {PtGen.pt(2);} )* ptvg  )+
   ;
   
-type  : 'ent' {PtGen.pt(6);}
-  |     'bool' {PtGen.pt(7);}
+type  : 'ent' {PtGen.pt(7);}
+  |     'bool' {PtGen.pt(8);}
   ;
   
 decprocs: (decproc ptvg)+
@@ -180,11 +180,11 @@ primaire: valeur
   | '(' expression ')'
   ;
   
-valeur  : nbentier {PtGen.pt(6); PtGen.pt(3);}
-  | '+' nbentier {PtGen.pt(6); PtGen.pt(3);}
-  | '-' nbentier {PtGen.pt(6); PtGen.pt(4);}
-  | 'vrai' {PtGen.pt(7); PtGen.pt(5);}
-  | 'faux' {PtGen.pt(7); PtGen.pt(5);}
+valeur  : nbentier {PtGen.pt(7); PtGen.pt(3);}
+  | '+' nbentier {PtGen.pt(7); PtGen.pt(3);}
+  | '-' nbentier {PtGen.pt(7); PtGen.pt(4);}
+  | 'vrai' {PtGen.pt(8); PtGen.pt(5);}
+  | 'faux' {PtGen.pt(8); PtGen.pt(6);}
   ;
 
 // partie lexicale  : cette partie ne doit pas etre modifiee  //
