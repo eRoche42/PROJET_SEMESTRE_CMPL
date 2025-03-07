@@ -267,13 +267,18 @@ public class PtGen {
 			vCour = FAUX;
 			break;
 		// TYPE
+		//ENTIER
 		case 7:
 			tCour = ENT;
 			break;
+		//BOOLEAN
 		case 8:
 			tCour = BOOL;
 			break;
-
+		// AFFECTER
+		case 9:
+			
+		break;
 		
 		case 255 : 
 			afftabSymb(); // affichage de la table des symboles en fin de compilation
