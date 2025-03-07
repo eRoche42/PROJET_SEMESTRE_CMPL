@@ -247,6 +247,8 @@ public class PtGen {
 				UtilLex.messErr("Ident déjà déclaré"); // Envoi Erreur
 				break;
 			}
+			po.produire(1); //reserver
+			po.produire(iAddrExec);
 			placeIdent(UtilLex.numIdCourant, VARGLOBALE, tCour, iAddrExec++);
 			break;
 		// LIRE Const ENT Positif
@@ -275,11 +277,28 @@ public class PtGen {
 		case 8:
 			tCour = BOOL;
 			break;
-		// AFFECTER
+		// expression empilage Valeur
 		case 9:
-			
+		    po.produire(2);
+			po.produire(vCour);
 		break;
-		
+		// expression avec un IDENT
+		case 10:
+			int index = presentIdent(1);
+
+			if(index == 0) UtilLex.messErr("Non présent dans tab symb");
+
+			if(tabSymb[index].categorie == CONSTANTE){
+				po.produire(2);
+				po.produire(tabSymb[index].info);
+			}else{
+				po.produire(3);
+				po.produire(tabSymb[index].info);
+			}
+
+
+
+		break;
 		case 255 : 
 			afftabSymb(); // affichage de la table des symboles en fin de compilation
 			break;
