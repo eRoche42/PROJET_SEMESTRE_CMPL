@@ -295,9 +295,74 @@ public class PtGen {
 				po.produire(3);
 				po.produire(tabSymb[index].info);
 			}
+		break;
+		//OU
+		case 11 :
+			po.produire(5);
+		break;
+		//ET
+		case 12 :
+			po.produire(6);
+		break;
+		//NON
+		case 13 :
+			po.produire(7);
+		break;
+		// ==
+		case 14 :
+			po.produire(12);
+		break;
+		// <>
+		case 15 :
+			po.produire(13);
+		break;
+		// >
+		case 16 :
+			po.produire(10);
+		break;
+		// >=
+		case 17 :
+			po.produire(11);
+		break;
+		// <
+		case 18 :
+			po.produire(8);
+		break;
+		// <=
+		case 19 :
+			po.produire(9);
+		break;
+		// +
+		case 20 :
+			po.produire(14);
+		break;
+		// -
+		case 21 :
+			po.produire(15);
+		break;
+		// *
+		case 22 :
+			po.produire(16);
+		break;
+		// div
+		case 23 :
+			po.produire(17);
+		break;
 
-
-
+		//affecter
+		case 24 :
+			int index2 = presentIdent(1);
+			if(index2 == 0) {UtilLex.messErr("Non présent tabSymb");}
+			else{
+				pileRep.empiler(tabSymb[index2].info);
+				pileRep.empiler(4);
+			}
+			
+		break;
+		//fin affecter
+		case 25:
+			po.produire(pileRep.depiler());
+			po.produire(pileRep.depiler());
 		break;
 		case 255 : 
 			afftabSymb(); // affichage de la table des symboles en fin de compilation

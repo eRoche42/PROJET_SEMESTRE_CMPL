@@ -132,7 +132,7 @@ ecriture: 'ecrire' '(' expression  ( ',' expression  )* ')'
    ;
   
 affouappel
-  : ident  (    ':=' expression 
+  : ident {PtGen.pt(24);} (    ':=' expression {PtGen.pt(25);}
             |   (effixes (effmods)?)?  
            )
   ;
@@ -143,40 +143,40 @@ effixes : '(' (expression  (',' expression  )*)? ')'
 effmods :'(' (ident  (',' ident  )*)? ')'
   ; 
   
-expression: (exp1) ('ou'  exp1  )*
+expression: (exp1) ('ou'  exp1 {PtGen.pt(11);})*
   ;
   
-exp1  : exp2 ('et'  exp2  )*
+exp1  : exp2 ('et'  exp2 {PtGen.pt(12);} )*
   ;
   
-exp2  : 'non' exp2 
+exp2  : 'non' exp2 {PtGen.pt(13);}
   | exp3  
   ;
   
 exp3  : exp4 
-  ( '='   exp4 
-  | '<>'  exp4 
-  | '>'   exp4 
-  | '>='  exp4 
-  | '<'   exp4 
-  | '<='  exp4  
+  ( '='   exp4 {PtGen.pt(14);}
+  | '<>'  exp4 {PtGen.pt(15);}
+  | '>'   exp4 {PtGen.pt(16);}
+  | '>='  exp4 {PtGen.pt(17);}
+  | '<'   exp4 {PtGen.pt(18);}
+  | '<='  exp4  {PtGen.pt(19);}
   ) ?
   ;
   
 exp4  : exp5 
-        ('+'  exp5 
-        |'-'  exp5 
+        ('+'  exp5 {PtGen.pt(20);}
+        |'-'  exp5 {PtGen.pt(21);}
         )*
   ;
   
 exp5  : primaire 
-        (    '*'   primaire 
-          | 'div'  primaire 
+        (    '*'   primaire {PtGen.pt(22);}
+          | 'div'  primaire {PtGen.pt(23);}
         )*
   ;
   
-primaire: valeur {PtGen.pt(9)}
-  | ident  
+primaire: valeur {PtGen.pt(9);}
+  | ident  {PtGen.pt(10);}
   | '(' expression ')'
   ;
   
