@@ -122,13 +122,13 @@ inscond : 'cond'  expression  ':' instructions
           'fcond' 
   ;
   
-boucle  : 'ttq'  expression 'faire' instructions 'fait' 
+boucle  : 'ttq' {PtGen.pt(26);} expression {PtGen.pt(27);}'faire' instructions {PtGen.pt(28);} 'fait' {PtGen.pt(29);} 
   ;
   
-lecture: 'lire' '(' ident  ( ',' ident  )* ')' 
+lecture: 'lire' '(' ident {PtGen.pt(40);} ( ',' ident {PtGen.pt(40);} )* ')' 
   ;
   
-ecriture: 'ecrire' '(' expression  ( ',' expression  )* ')'
+ecriture: 'ecrire' '(' expression {PtGen.pt(41);}  ( ',' expression {PtGen.pt(41);}  )* ')'
    ;
   
 affouappel

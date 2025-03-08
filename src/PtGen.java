@@ -279,7 +279,7 @@ public class PtGen {
 			break;
 		// expression empilage Valeur
 		case 9:
-		    po.produire(2);
+		    po.produire(EMPILER);
 			po.produire(vCour);
 		break;
 		// expression avec un IDENT
@@ -289,64 +289,64 @@ public class PtGen {
 			if(index == 0) UtilLex.messErr("Non présent dans tab symb");
 
 			if(tabSymb[index].categorie == CONSTANTE){
-				po.produire(2);
+				po.produire(EMPILER);
 				po.produire(tabSymb[index].info);
 			}else{
-				po.produire(3);
+				po.produire(CONTENUG);
 				po.produire(tabSymb[index].info);
 			}
 		break;
 		//OU
 		case 11 :
-			po.produire(5);
+			po.produire(OU);
 		break;
 		//ET
 		case 12 :
-			po.produire(6);
+			po.produire(ET);
 		break;
 		//NON
 		case 13 :
-			po.produire(7);
+			po.produire(NON);
 		break;
 		// ==
 		case 14 :
-			po.produire(12);
+			po.produire(EG);
 		break;
 		// <>
 		case 15 :
-			po.produire(13);
+			po.produire(DIFF);
 		break;
 		// >
 		case 16 :
-			po.produire(10);
+			po.produire(SUP);
 		break;
 		// >=
 		case 17 :
-			po.produire(11);
+			po.produire(SUPEG);
 		break;
 		// <
 		case 18 :
-			po.produire(8);
+			po.produire(INF);
 		break;
 		// <=
 		case 19 :
-			po.produire(9);
+			po.produire(INFEG);
 		break;
 		// +
 		case 20 :
-			po.produire(14);
+			po.produire(ADD);
 		break;
 		// -
 		case 21 :
-			po.produire(15);
+			po.produire(SOUS);
 		break;
 		// *
 		case 22 :
-			po.produire(16);
+			po.produire(MUL);
 		break;
 		// div
 		case 23 :
-			po.produire(17);
+			po.produire(DIV);
 		break;
 
 		//affecter
@@ -355,7 +355,7 @@ public class PtGen {
 			if(index2 == 0) {UtilLex.messErr("Non présent tabSymb");}
 			else{
 				pileRep.empiler(tabSymb[index2].info);
-				pileRep.empiler(4);
+				pileRep.empiler(AFFECTERG);
 			}
 			
 		break;
@@ -364,7 +364,60 @@ public class PtGen {
 			po.produire(pileRep.depiler());
 			po.produire(pileRep.depiler());
 		break;
+
+		// BOUCLE
+		//-------------------------------------------------
+		case 26:
+			pileRep.empiler(po.getIpo());
+		break;
+		case 27:
+			po.produire(BSIFAUX);
+			pileRep.empiler(po.getIpo());
+			po.produire(1); //Dummy
+		break;
+		case 28:
+			po.produire(BINCOND);
+			po.produire(pileRep.depiler());
+		break;
+		case 29:
+			po.modifier(pileRep.depiler(), po.getIpo());
+		break;
+		//-------------------------------------------------
+// LIRE :
+        case 40:
+            int indexLire = presentIdent(1);
+            if(indexLire == 0) UtilLex.messErr("lire(): La variable "+ UtilLex.numIdCourant +" n'existe pas");
+            if(tabSymb[indexLire].categorie == CONSTANTE) UtilLex.messErr("lire(): "+UtilLex.numIdCourant+" est une constante !");;
+            switch (tCour) {
+                // lirent
+                case ENT :
+                    po.produire(LIRENT);
+                    break;
+                // lirebool
+                case BOOL :
+                    po.produire(LIREBOOL);
+                    break;
+            }
+            // affecterg 'addrExec'
+            po.produire(AFFECTERG);
+            po.produire(tabSymb[indexLire].info);
+            break;
+
+        // ECRIRE :
+        case 41:
+        
+            switch (tCour) {
+                case ENT :
+                    po.produire(ECRENT);
+                    break;
+                case BOOL :
+                    po.produire(ECRBOOL);
+                    break;
+            }
+
+            break;
 		case 255 : 
+			po.constGen();
 			afftabSymb(); // affichage de la table des symboles en fin de compilation
 			break;
 
