@@ -248,7 +248,7 @@ public class PtGen {
 				break;
 			}
 			po.produire(1); //reserver
-			po.produire(iAddrExec);
+			po.produire(1);
 			placeIdent(UtilLex.numIdCourant, VARGLOBALE, tCour, iAddrExec++);
 			break;
 		// LIRE Const ENT Positif
