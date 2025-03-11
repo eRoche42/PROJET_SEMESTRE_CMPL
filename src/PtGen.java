@@ -370,17 +370,23 @@ public class PtGen {
 		case 26:
 			pileRep.empiler(po.getIpo());
 		break;
+		
 		case 27:
 			po.produire(BSIFAUX);
-			pileRep.empiler(po.getIpo());
 			po.produire(1); //Dummy
+
+			pileRep.empiler(po.getIpo());
 		break;
+
 		case 28:
 			po.produire(BINCOND);
-			po.produire(pileRep.depiler());
+			// + 2 pour atteindre l'instruction suivante
+			po.modifier(pileRep.depiler(), po.getIpo() + 2);
+			// +1 ah vérifier.
+			po.produire(pileRep.depiler() + 1);
 		break;
-		case 29:
-			po.modifier(pileRep.depiler(), po.getIpo());
+
+		case 29://Vérifier le fonctionnement de modifier, si faut il essaye de modifier un truc qui n'éxiste pas.
 		break;
 		//-------------------------------------------------
 // LIRE :
