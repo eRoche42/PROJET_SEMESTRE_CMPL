@@ -380,13 +380,25 @@ public class PtGen {
 
 		case 28:
 			po.produire(BINCOND);
-			// + 2 pour atteindre l'instruction suivante
+			// + 2 padding pour atteindre l'instruction suivante
 			po.modifier(pileRep.depiler(), po.getIpo() + 2);
-			// +1 ah vérifier.
+			// +1 padding.
 			po.produire(pileRep.depiler() + 1);
 		break;
 
-		case 29://Vérifier le fonctionnement de modifier, si faut il essaye de modifier un truc qui n'éxiste pas.
+		case 29:
+		po.produire(BSIFAUX);
+		po.produire(1);//Dummy
+		pileRep.empiler(po.getIpo());
+		break;
+		case 30:
+		po.produire(BINCOND);
+		po.produire(1); //Dummy
+		po.modifier(pileRep.depiler(), po.getIpo()-1);	
+		pileRep.empiler(po.getIpo());
+		break;
+		case 31:
+		po.modifier(pileRep.depiler(), po.getIpo()+1);
 		break;
 		//-------------------------------------------------
 // LIRE :

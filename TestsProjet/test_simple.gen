@@ -1,0 +1,16 @@
+FICHIER TestsProjet/test_simple.gen : 
+
+   1  reserver        1
+   3  empiler         0
+   5  empiler         1
+   7  eg        
+   8  bsifaux        14
+  10  empiler         1
+  12  affecterg       0
+  14  bincond        20
+  16  empiler         0
+  18  affecterg       1
+  20  empiler         1
+  22  empiler         0
+  24  ou        
+  25  affecterg       0
