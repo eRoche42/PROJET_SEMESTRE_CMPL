@@ -385,7 +385,8 @@ public class PtGen {
 			// +1 padding.
 			po.produire(pileRep.depiler() + 1);
 		break;
-
+		//--------------------------------------------------
+		//isscond
 		case 29:
 		po.produire(BSIFAUX);
 		po.produire(1);//Dummy
@@ -401,6 +402,41 @@ public class PtGen {
 		po.modifier(pileRep.depiler(), po.getIpo()+1);
 		break;
 		//-------------------------------------------------
+		// 'cond' {PtGen.pt(30);}
+        case 32:
+            pileRep.empiler(0);
+            break;
+
+        //    'cond' expression {PtGen.pt(31);} : instructions (, expression {PtGen.pt(31);} : instructions)*
+        case 33:
+            po.produire(BSIFAUX);
+            po.produire(0);
+            pileRep.empiler(po.getIpo());
+            break;
+
+        case 34:
+            po.produire(BINCOND);
+            // modif bsifaux precedent avec l'adresse des prochaines instructions
+            po.modifier(pileRep.depiler(), po.getIpo()+2);
+            // dépilement pour produire l'adresse du bincond courant
+            po.produire(pileRep.depiler());
+            // empilement de l'adresse du bincond courant
+            pileRep.empiler(po.getIpo());
+            break;
+
+        case 35:
+            // attraper et sauver l'ipo de fin de case
+            // sauver l'argument du bincond précédent
+            //
+             int ipoAmodifier = pileRep.depiler();
+            int  mem = po.getElt(ipoAmodifier);
+
+            while (mem != 0) {
+                mem = po.getElt(ipoAmodifier);
+                po.modifier(ipoAmodifier, po.getIpo());
+                ipoAmodifier = mem;
+            }
+            break;
 // LIRE :
         case 40:
             int indexLire = presentIdent(1);
