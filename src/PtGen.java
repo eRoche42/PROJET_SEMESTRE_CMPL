@@ -428,12 +428,12 @@ public class PtGen {
             // attraper et sauver l'ipo de fin de case
             // sauver l'argument du bincond précédent
             //
-             int ipoAmodifier = pileRep.depiler();
+            int ipoAmodifier = pileRep.depiler();
             int  mem = po.getElt(ipoAmodifier);
 
             while (mem != 0) {
                 mem = po.getElt(ipoAmodifier);
-                po.modifier(ipoAmodifier, po.getIpo());
+                po.modifier(ipoAmodifier, po.getIpo()+1);
                 ipoAmodifier = mem;
             }
             break;

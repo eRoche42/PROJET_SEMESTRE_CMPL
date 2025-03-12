@@ -6,8 +6,7 @@ debut
 	cond
 		b1: ecrire(1),
 		b2: ecrire(3),
-		b3: ecrire(2),
-
-	aut ecrire(5)
+		b3: ecrire(2)
+		aut ecrire(5)
 	fcond;
 fin
