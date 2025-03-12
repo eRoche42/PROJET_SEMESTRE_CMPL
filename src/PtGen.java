@@ -437,7 +437,7 @@ public class PtGen {
                 ipoAmodifier = mem;
             }
             break;
-// LIRE :
+		// LIRE :
         case 40:
             int indexLire = presentIdent(1);
             if(indexLire == 0) UtilLex.messErr("lire(): La variable "+ UtilLex.numIdCourant +" n'existe pas");
@@ -459,7 +459,7 @@ public class PtGen {
 
         // ECRIRE :
         case 41:
-        
+			
             switch (tCour) {
                 case ENT :
                     po.produire(ECRENT);
@@ -471,7 +471,10 @@ public class PtGen {
 
             break;
 		case 255 : 
-			po.constGen();
+		po.constGen();
+			po.produire(24);
+			po.constObj();
+			
 			afftabSymb(); // affichage de la table des symboles en fin de compilation
 			break;
 

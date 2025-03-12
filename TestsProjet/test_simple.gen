@@ -1,4 +1,4 @@
-FICHIER TestsProjet/test_simple.gen : 
+FICHIER ./TestsProjet/test_simple.gen : 
 
    1  reserver        1
    3  reserver        1
@@ -30,7 +30,7 @@ FICHIER TestsProjet/test_simple.gen :
   47  bincond        61
   49  contenug        2
   51  bsifaux        58
-  53  empiler         2
+  53  contenug        0
   55  ecrent    
   56  bincond        61
   58  empiler         5
