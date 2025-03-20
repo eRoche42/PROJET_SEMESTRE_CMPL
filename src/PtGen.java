@@ -247,8 +247,8 @@ public class PtGen {
 				UtilLex.messErr("Ident déjà déclaré"); // Envoi Erreur
 				break;
 			}
-			po.produire(1); //reserver
-			po.produire(1);
+			po.produire(RESERVER); //reserver
+			
 			placeIdent(UtilLex.numIdCourant, VARGLOBALE, tCour, iAddrExec++);
 			break;
 		// LIRE Const ENT Positif
@@ -472,7 +472,7 @@ public class PtGen {
             break;
 		case 255 : 
 		po.constGen();
-			po.produire(24);
+			po.produire(ARRET);
 			po.constObj();
 			
 			afftabSymb(); // affichage de la table des symboles en fin de compilation
