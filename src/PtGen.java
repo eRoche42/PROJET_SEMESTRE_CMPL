@@ -248,7 +248,7 @@ public class PtGen {
 				break;
 			}
 			po.produire(RESERVER); //reserver
-			
+			po.produire(RESERVER);
 			placeIdent(UtilLex.numIdCourant, VARGLOBALE, tCour, iAddrExec++);
 			break;
 		// LIRE Const ENT Positif
@@ -395,7 +395,7 @@ public class PtGen {
 		case 30:
 		po.produire(BINCOND);
 		po.produire(1); //Dummy
-		po.modifier(pileRep.depiler(), po.getIpo()-1);	
+		po.modifier(pileRep.depiler(), po.getIpo()+1);	
 		pileRep.empiler(po.getIpo());
 		break;
 		case 31:
