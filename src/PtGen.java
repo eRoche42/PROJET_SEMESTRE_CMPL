@@ -442,7 +442,7 @@ public class PtGen {
             int indexLire = presentIdent(1);
             if(indexLire == 0) UtilLex.messErr("lire(): La variable "+ UtilLex.numIdCourant +" n'existe pas");
             if(tabSymb[indexLire].categorie == CONSTANTE) UtilLex.messErr("lire(): "+UtilLex.numIdCourant+" est une constante !");;
-            switch (tCour) {
+            switch (tabSymb[indexLire].type) {
                 // lirent
                 case ENT :
                     po.produire(LIRENT);
