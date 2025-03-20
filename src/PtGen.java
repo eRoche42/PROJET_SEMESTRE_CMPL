@@ -405,12 +405,12 @@ public class PtGen {
 		po.modifier(pileRep.depiler(), po.getIpo()+1);
 		break;
 		//-------------------------------------------------
-		// 'cond' {PtGen.pt(30);}
+		// 'cond' {PtGen.pt(32);}
         case 32:
             pileRep.empiler(0);
             break;
 
-        //    'cond' expression {PtGen.pt(31);} : instructions (, expression {PtGen.pt(31);} : instructions)*
+        //    'cond' expression {PtGen.pt(33);} : instructions (, expression {PtGen.pt(33);} : instructions)*
         case 33:
             po.produire(BSIFAUX);
             po.produire(0);
@@ -433,12 +433,14 @@ public class PtGen {
             //
             int ipoAmodifier = pileRep.depiler();
             int  mem = po.getElt(ipoAmodifier);
-
+			
             while (mem != 0) {
                 mem = po.getElt(ipoAmodifier);
-                po.modifier(ipoAmodifier, po.getIpo()+1);
+                po.modifier(ipoAmodifier, po.getIpo()-2);
                 ipoAmodifier = mem;
             }
+			mem = po.getElt(ipoAmodifier);
+                po.modifier(ipoAmodifier, po.getIpo()-2);
             break;
 		// LIRE :
         case 40:
