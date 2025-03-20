@@ -123,7 +123,8 @@ public class PtGen {
     
     private static int tCour; // type de l'expression compilee
     private static int vCour; // sert uniquement lors de la compilation d'une valeur (entiere ou boolenne)
-  
+	
+	private static int reservNumber;
    
     // TABLE DES SYMBOLES
     // ------------------
@@ -216,6 +217,9 @@ public class PtGen {
 
 		iAddrExec = 0;
 
+		//Réservation 
+		reservNumber = 0;
+
 	} // initialisations
 
 	/**
@@ -247,9 +251,8 @@ public class PtGen {
 				UtilLex.messErr("Ident déjà déclaré"); // Envoi Erreur
 				break;
 			}
-			po.produire(RESERVER); //reserver
-			po.produire(RESERVER);
 			placeIdent(UtilLex.numIdCourant, VARGLOBALE, tCour, iAddrExec++);
+			reservNumber += 1;
 			break;
 		// LIRE Const ENT Positif
 		case 3 :
@@ -470,6 +473,11 @@ public class PtGen {
             }
 
             break;
+			// var extend a changer de place
+		case 254 :
+			po.produire(RESERVER);
+			po.produire(reservNumber);
+		break;
 		case 255 : 
 		po.constGen();
 			po.produire(ARRET);
