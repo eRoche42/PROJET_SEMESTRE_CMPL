@@ -125,6 +125,7 @@ public class PtGen {
     private static int vCour; // sert uniquement lors de la compilation d'une valeur (entiere ou boolenne)
 	
 	private static int reservNumber;
+	
    
     // TABLE DES SYMBOLES
     // ------------------
@@ -238,21 +239,30 @@ public class PtGen {
 
 		// CONSTANTE
 		case 1 :
-			if( presentIdent(1)>0 ) {
+			if( presentIdent(bc)>0 ) {
 				UtilLex.messErr("Réaffectation de constantes interdite"); // Envoi Erreur
 				break;
 			}
-			placeIdent(UtilLex.numIdCourant, CONSTANTE, tCour, vCour);
+			if(bc !=0){
+				placeIdent(UtilLex.numIdCourant, VARLOCALE, tCour, iAddrExec++);
+			}else{
+				placeIdent(UtilLex.numIdCourant, CONSTANTE, tCour, vCour);
+
+			}
 			break;
 
 		// VARGLOBALE
 		case 2 :
-			if( presentIdent(1)>0 ) {
-				UtilLex.messErr("Ident déjà déclaré"); // Envoi Erreur
-				break;
-			}
+		if( presentIdent(bc)>0 ) {
+			UtilLex.messErr("Ident déjà déclaré"); // Envoi Erreur
+			break;
+		}
+			if(bc != 0){
+				placeIdent(UtilLex.numIdCourant, VARLOCALE, tCour, iAddrExec++);
+				reservNumber += 1;
+			}else{
 			placeIdent(UtilLex.numIdCourant, VARGLOBALE, tCour, iAddrExec++);
-			reservNumber += 1;
+			reservNumber += 1;}
 			break;
 		// LIRE Const ENT Positif
 		case 3 :
@@ -476,9 +486,43 @@ public class PtGen {
 
             break;
 			// var extend a changer de place
+
+
+		//Debut
+		case 50 :
+		pileRep.empiler(iAddrExec); //EX bp
+		iAddrExec = 0;
+		if( presentIdent(1)>0 ) {
+			UtilLex.messErr("Ident déjà déclaré"); // Envoi Erreur
+			break;
+		}
+		placeIdent(UtilLex.numIdCourant, PROC, NEUTRE, iAddrExec);
+		pileRep.empiler(it);
+		placeIdent(-1,PRIVEE,NEUTRE,-1);
+		pileRep.empiler(it);
+
+
+		break;
+
+		case 51:
+			placeIdent(UtilLex.numIdCourant, PARAMFIXE, tCour, iAddrExec++);
+		break;
+
+		case 52:
+			placeIdent(UtilLex.numIdCourant, PARAMMOD, tCour, iAddrExec++);
+		break;
+		case 53:
+		tabSymb[pileRep.depiler()].info = iAddrExec;
+		iAddrExec += 2;
+		break;
+		case 54:
+			tabSymb[pileRep.depiler()].info = po.getIpo(); // ne met rien à jour
+			iAddrExec = pileRep.depiler();
+		break;
 		case 254 :
 			po.produire(RESERVER);
 			po.produire(reservNumber);
+			reservNumber = 0 ;
 		break;
 		case 255 : 
 		po.constGen();
