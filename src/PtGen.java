@@ -124,8 +124,8 @@ public class PtGen {
     private static int tCour; // type de l'expression compilee
     private static int vCour; // sert uniquement lors de la compilation d'une valeur (entiere ou boolenne)
 	
-	private static int reservNumber;
-	private static int nbArgz;
+    private static int reservNumber;
+    private static int nbArgz;
 	
    
     // TABLE DES SYMBOLES
