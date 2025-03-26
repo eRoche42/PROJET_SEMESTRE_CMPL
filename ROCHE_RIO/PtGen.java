@@ -545,15 +545,19 @@ public class PtGen {
 		break;
 
 		case 54:
-			po.produire(RETOUR);
-			po.produire(nbArgz);
-			iAddrExec = procPile.depiler();
-			nbArgz =0;
-			break;
+		po.produire(RETOUR);
+		po.produire(nbArgz);
+		iAddrExec = procPile.depiler();
+		nbArgz =0;
+		break;
 
 		case 56:
 		break;
-		
+		case 254 :
+			po.produire(RESERVER);
+			po.produire(reservNumber);
+			reservNumber = 0 ;
+		break;
 		case 57:
 			procPile.empiler(nbArgz);
 			nbArgz = 0;
@@ -568,14 +572,7 @@ public class PtGen {
 			po.produire(tabSymb[procPile.depiler()].info);
 			nbArgz = procPile.depiler();
 			break;
-		
-		case 60:
-		break;
-		case 254 :
-			po.produire(RESERVER);
-			po.produire(reservNumber);
-			reservNumber = 0 ;
-			break;
+
 		case 255 : 
 			po.produire(ARRET);
 			po.constGen();

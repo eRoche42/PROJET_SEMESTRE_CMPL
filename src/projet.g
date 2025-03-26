@@ -74,7 +74,7 @@ type  : 'ent' {PtGen.pt(7);}
   |     'bool' {PtGen.pt(8);}
   ;
   
-decprocs: (decproc ptvg)+
+decprocs:  (decproc ptvg)+
   ;
   
 decproc :  'proc'  ident {PtGen.pt(50);} parfixe? parmod? {PtGen.pt(53);}consts? vars?  corps {PtGen.pt(54);}
@@ -133,14 +133,14 @@ ecriture: 'ecrire' '(' expression {PtGen.pt(41);}  ( ',' expression {PtGen.pt(41
   
 affouappel
   : ident {PtGen.pt(24);} (    ':=' expression {PtGen.pt(25);}
-            |   (effixes (effmods)?)?  
+            |   {PtGen.pt(57);} (effixes (effmods)?)? {PtGen.pt(59);} 
            )
   ;
   
-effixes : '(' (expression  (',' expression  )*)? ')'
+effixes : '(' (expression  {PtGen.pt(58); PtGen.pt(9);} (',' expression {PtGen.pt(58); PtGen.pt(9);}  )*)? ')'
   ;
   
-effmods :'(' (ident  (',' ident  )*)? ')'
+effmods :'(' (ident  {PtGen.pt(58); PtGen.pt(10);} (',' ident {PtGen.pt(58);PtGen.pt(10);}  )*)? ')'
   ; 
   
 expression: (exp1) ('ou'  exp1 {PtGen.pt(11);})*
