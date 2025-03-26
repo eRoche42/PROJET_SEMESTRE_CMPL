@@ -125,6 +125,7 @@ public class PtGen {
     private static int vCour; // sert uniquement lors de la compilation d'une valeur (entiere ou boolenne)
 	
 	private static int reservNumber;
+	private static int nbArgz;
 	
    
     // TABLE DES SYMBOLES
@@ -193,6 +194,8 @@ public class PtGen {
 	}
     
 
+	private static TPileRep procPile;
+
 	/**
 	 *  initialisations A COMPLETER SI BESOIN
 	 *  -------------------------------------
@@ -220,6 +223,8 @@ public class PtGen {
 
 		//Réservation 
 		reservNumber = 0;
+		nbArgz = 0;
+		procPile = new TPileRep();
 
 	} // initialisations
 
@@ -474,8 +479,8 @@ public class PtGen {
 
         // ECRIRE :
         case 41:
-			
-            switch (tCour) {
+			int indexLireE = presentIdent(1);
+            switch (tabSymb[indexLireE].type) {
                 case ENT :
                     po.produire(ECRENT);
                     break;
@@ -488,36 +493,45 @@ public class PtGen {
 			// var extend a changer de place
 
 
-		//Debut
+		//Debut PROC
 		case 50 :
-		pileRep.empiler(iAddrExec); //EX bp
-		iAddrExec = 0;
-		if( presentIdent(1)>0 ) {
-			UtilLex.messErr("Ident déjà déclaré"); // Envoi Erreur
-			break;
-		}
-		placeIdent(UtilLex.numIdCourant, PROC, NEUTRE, iAddrExec);
-		pileRep.empiler(it);
-		placeIdent(-1,PRIVEE,NEUTRE,-1);
-		pileRep.empiler(it);
+		
+			procPile.empiler(iAddrExec);
+			iAddrExec =0;
+			placeIdent(UtilLex.numIdCourant, PROC, NEUTRE, 0);
+			procPile.empiler(it);
+			placeIdent(-1, PRIVEE, NEUTRE, 0);
+			procPile.empiler(it);
+
 
 
 		break;
-
+			//Ajout de l'ident PARAMFIX
 		case 51:
-			placeIdent(UtilLex.numIdCourant, PARAMFIXE, tCour, iAddrExec++);
+		placeIdent(UtilLex.numIdCourant, PARAMFIXE, tCour, nbArgz++);
+		break;
+			//Ajout de l'ident PARAMMOD
+		case 52:
+		placeIdent(UtilLex.numIdCourant, PARAMFIXE, tCour, nbArgz++);
+
 		break;
 
-		case 52:
-			placeIdent(UtilLex.numIdCourant, PARAMMOD, tCour, iAddrExec++);
-		break;
-		case 53:
-		tabSymb[pileRep.depiler()].info = iAddrExec;
-		iAddrExec += 2;
+		case 53:	
+			po.produire(BINCOND);
+			po.produire(0);
+			tabSymb[procPile.depiler()].info = nbArgz;
+			tabSymb[procPile.depiler()].info = po.getIpo()+1;
+
+			iAddrExec = nbArgz + 2;
 		break;
 		case 54:
-			tabSymb[pileRep.depiler()].info = po.getIpo(); // ne met rien à jour
-			iAddrExec = pileRep.depiler();
+		po.produire(RETOUR);
+		po.produire(nbArgz);
+		iAddrExec = procPile.depiler();
+		nbArgz =0;
+		break;
+
+		case 56:
 		break;
 		case 254 :
 			po.produire(RESERVER);
@@ -525,8 +539,8 @@ public class PtGen {
 			reservNumber = 0 ;
 		break;
 		case 255 : 
-		po.constGen();
 			po.produire(ARRET);
+			po.constGen();
 			po.constObj();
 			
 			afftabSymb(); // affichage de la table des symboles en fin de compilation

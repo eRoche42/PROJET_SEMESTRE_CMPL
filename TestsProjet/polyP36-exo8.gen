@@ -1,49 +1,57 @@
 FICHIER TestsProjet/polyP36-exo8.gen : 
 
    1  reserver        2
-   3  reserver       85
-   5  empiler         0
-   7  affecterg       5
-   9  contenug        0
-  11  empiler         0
-  13  eg        
-  14  bsifaux        30
-  16  empiler         1
-  18  affecterg       5
-  20  empiler         0
-  22  affecterg       1
-  24  empiler         1
-  26  affecterg       1
-  28  bincond         0
-  30  contenug        0
-  32  empiler        -1
-  34  eg        
-  35  bsifaux        46
-  37  empiler         1
-  39  affecterg       5
-  41  empiler         1
-  43  affecterg       1
-  45  empiler         0
-  47  affecterg       1
-  49  contenug        5
-  51  affecterg       2
-  53  reserver        2
-  55  lirent    
-  56  affecterg       3
-  58  contenug        3
-  60  contenug        4
-  62  non       
-  63  bsifaux         1
-  65  contenug        1
-  67  bsifaux        78
-  69  contenug        3
-  71  contenug        0
-  73  add       
-  74  affecterg       0
-  76  bincond        85
-  78  contenug        3
-  80  contenug        0
-  82  mul       
-  83  affecterg       0
-  85  contenug        0
-  87  ecrbool   
+   3  bincond        97
+   5  reserver        1
+   7  empiler         0
+   9  affecterg       5
+  11  contenug        0
+  13  empiler         0
+  15  eg        
+  16  bsifaux        32
+  18  empiler         1
+  20  affecterg       5
+  22  empiler         0
+  24  affecterg       1
+  26  empiler         1
+  28  affecterg       1
+  30  bincond        54
+  32  contenug        0
+  34  empiler        -1
+  36  eg        
+  37  bsifaux        53
+  39  empiler         1
+  41  affecterg       5
+  43  empiler         1
+  45  affecterg       1
+  47  empiler         0
+  49  affecterg       1
+  51  bincond        54
+  53  empiler         1
+  55  affecterg       5
+  57  contenug        5
+  59  affecterg       2
+  61  retour          3
+  63  bincond         0
+  65  reserver        2
+  67  lirent    
+  68  affecterg       3
+  70  contenug        3
+  72  contenug        4
+  74  non       
+  75  bsifaux         1
+  77  contenug        1
+  79  bsifaux        90
+  81  contenug        3
+  83  contenug        0
+  85  add       
+  86  affecterg       0
+  88  bincond        97
+  90  contenug        3
+  92  contenug        0
+  94  mul       
+  95  affecterg       0
+  97  retour          1
+  99  contenug        0
+ 101  ecrent    
+ 102  arret     
