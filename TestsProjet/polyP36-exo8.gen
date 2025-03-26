@@ -1,7 +1,7 @@
 FICHIER TestsProjet/polyP36-exo8.gen : 
 
    1  reserver        2
-   3  bincond        95
+   3  bincond        97
    5  reserver        1
    7  empiler         0
    9  affecterg       5
@@ -31,25 +31,27 @@ FICHIER TestsProjet/polyP36-exo8.gen :
   55  affecterg       5
   57  contenug        5
   59  affecterg       2
-  61  bincond         0
-  63  reserver        2
-  65  lirent    
-  66  affecterg       3
-  68  contenug        3
-  70  contenug        4
-  72  non       
-  73  bsifaux         1
-  75  contenug        1
-  77  bsifaux        88
-  79  contenug        3
-  81  contenug        0
-  83  add       
-  84  affecterg       0
-  86  bincond        95
-  88  contenug        3
-  90  contenug        0
-  92  mul       
-  93  affecterg       0
-  95  contenug        0
-  97  ecrent    
-  98  arret     
+  61  retour          3
+  63  bincond         0
+  65  reserver        2
+  67  lirent    
+  68  affecterg       3
+  70  contenug        3
+  72  contenug        4
+  74  non       
+  75  bsifaux         1
+  77  contenug        1
+  79  bsifaux        90
+  81  contenug        3
+  83  contenug        0
+  85  add       
+  86  affecterg       0
+  88  bincond        97
+  90  contenug        3
+  92  contenug        0
+  94  mul       
+  95  affecterg       0
+  97  retour          1
+  99  contenug        0
+ 101  ecrent    
+ 102  arret     
