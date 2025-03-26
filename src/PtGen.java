@@ -495,6 +495,7 @@ public class PtGen {
 
 		//Debut PROC
 		case 50 :
+		
 			procPile.empiler(iAddrExec);
 			iAddrExec =0;
 			placeIdent(UtilLex.numIdCourant, PROC, NEUTRE, 0);
@@ -519,16 +520,17 @@ public class PtGen {
 			po.produire(BINCOND);
 			po.produire(0);
 			tabSymb[procPile.depiler()].info = nbArgz;
-			tabSymb[procPile.depiler()].info = po.getIpo();
+			tabSymb[procPile.depiler()].info = po.getIpo()+1;
 
 			iAddrExec = nbArgz + 2;
 		break;
 		case 54:
-			
-			nbArgz = 0;
+		po.produire(RETOUR);
+		po.produire(nbArgz);
+		iAddrExec = procPile.depiler();
+		nbArgz =0;
 		break;
-		case 55:
-		break;
+
 		case 56:
 		break;
 		case 254 :
