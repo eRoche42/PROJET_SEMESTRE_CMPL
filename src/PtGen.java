@@ -248,7 +248,7 @@ public class PtGen {
 				UtilLex.messErr("Réaffectation de constantes interdite"); // Envoi Erreur
 				break;
 			}
-			if(bc !=0){
+			if(bc !=1){
 				placeIdent(UtilLex.numIdCourant, VARLOCALE, tCour, iAddrExec++);
 			}else{
 				placeIdent(UtilLex.numIdCourant, CONSTANTE, tCour, vCour);
@@ -262,7 +262,7 @@ public class PtGen {
 			UtilLex.messErr("Ident déjà déclaré"); // Envoi Erreur
 			break;
 		}
-			if(bc != 0){
+			if(bc != 1){
 				placeIdent(UtilLex.numIdCourant, VARLOCALE, tCour, iAddrExec++);
 				reservNumber += 1;
 			}else{
@@ -302,7 +302,7 @@ public class PtGen {
 		break;
 		// expression avec un IDENT
 		case 10:
-            int index = presentIdent(bc);
+            int index = presentIdent(1);
 
             if(index == 0) UtilLex.messErr("Non présent dans tab symb");
 
@@ -318,9 +318,11 @@ public class PtGen {
 				}
                 else {
 					po.produire(CONTENUL);
+					po.produire(tabSymb[index].info);
+
                 if (tabSymb[index].categorie == PARAMMOD) po.produire(1);
                 else po.produire(0);
-			}
+				}
             }
             break;
 		//OU
@@ -378,9 +380,10 @@ public class PtGen {
 
 		//affecter
 		case 24 :
-            int index2 = presentIdent(bc);
+            int index2 = presentIdent(1);
             if(index2 == 0) {UtilLex.messErr("Ident non présent dans tabSymb");}
             else{
+				System.out.println(bc);
                 if (bc == 1) {
                     pileRep.empiler(tabSymb[index2].info);
                     pileRep.empiler(AFFECTERG);
@@ -389,9 +392,10 @@ public class PtGen {
                     else if (tabSymb[index2].categorie == VARLOCALE) pileRep.empiler(0);
                     else 
 					{pileRep.empiler(1);
-                    pileRep.empiler(tabSymb[index2].info);
-                    pileRep.empiler(AFFECTERL);
+                   
 					}
+					pileRep.empiler(tabSymb[index2].info);
+                    pileRep.empiler(AFFECTERL);
                 }
             }
             break;
@@ -516,7 +520,7 @@ public class PtGen {
 		case 50 :
 		
 			procPile.empiler(iAddrExec);
-			iAddrExec =0;
+			iAddrExec = 0;
 			placeIdent(UtilLex.numIdCourant, PROC, NEUTRE, 0);
 			procPile.empiler(it);
 			placeIdent(-1, PRIVEE, NEUTRE, 0);
@@ -531,7 +535,7 @@ public class PtGen {
 		break;
 			//Ajout de l'ident PARAMMOD
 		case 52:
-		placeIdent(UtilLex.numIdCourant, PARAMFIXE, tCour, nbArgz++);
+		placeIdent(UtilLex.numIdCourant, PARAMMOD, tCour, nbArgz++);
 
 		break;
 
@@ -549,6 +553,7 @@ public class PtGen {
 			po.produire(nbArgz);
 			iAddrExec = procPile.depiler();
 			nbArgz =0;
+			bc = 1;
 			break;
 
 		case 56:
@@ -570,6 +575,8 @@ public class PtGen {
 			break;
 		
 		case 60:
+		bc = it +3 ;
+
 		break;
 		case 254 :
 			po.produire(RESERVER);
