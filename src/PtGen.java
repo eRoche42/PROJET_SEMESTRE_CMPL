@@ -194,6 +194,8 @@ public class PtGen {
 	}
     
 
+	private static TPileRep procPile;
+
 	/**
 	 *  initialisations A COMPLETER SI BESOIN
 	 *  -------------------------------------
@@ -222,6 +224,7 @@ public class PtGen {
 		//Réservation 
 		reservNumber = 0;
 		nbArgz = 0;
+		procPile = new TPileRep();
 
 	} // initialisations
 
@@ -490,51 +493,43 @@ public class PtGen {
 			// var extend a changer de place
 
 
-		//Debut
+		//Debut PROC
 		case 50 :
-		po.produire(BINCOND);
-		po.produire(0);
-		pileRep.empiler(iAddrExec); //EX bp
-		iAddrExec = 0;
-		if( presentIdent(1)>0 ) {
-			UtilLex.messErr("Ident déjà déclaré"); // Envoi Erreur
-			break;
-		}
-		placeIdent(UtilLex.numIdCourant, PROC, NEUTRE, iAddrExec);
-		pileRep.empiler(it);
-		placeIdent(-1,PRIVEE,NEUTRE,-1);
-		pileRep.empiler(it);
+			procPile.empiler(iAddrExec);
+			iAddrExec =0;
+			placeIdent(UtilLex.numIdCourant, PROC, NEUTRE, 0);
+			procPile.empiler(it);
+			placeIdent(-1, PRIVEE, NEUTRE, 0);
+			procPile.empiler(it);
+
 
 
 		break;
-
-			//Ajout de l'ident PARAMFIXE
+			//Ajout de l'ident PARAMFIX
 		case 51:
-			placeIdent(UtilLex.numIdCourant, PARAMFIXE, tCour, iAddrExec++);
+		placeIdent(UtilLex.numIdCourant, PARAMFIXE, tCour, nbArgz++);
 		break;
 			//Ajout de l'ident PARAMMOD
 		case 52:
-			placeIdent(UtilLex.numIdCourant, PARAMMOD, tCour, iAddrExec++);
+		placeIdent(UtilLex.numIdCourant, PARAMFIXE, tCour, nbArgz++);
+
 		break;
 
-		case 53:
-		tabSymb[pileRep.depiler()].info = iAddrExec;
-		nbArgz = iAddrExec;
-		iAddrExec += 2;
+		case 53:	
+			po.produire(BINCOND);
+			po.produire(0);
+			tabSymb[procPile.depiler()].info = nbArgz;
+			tabSymb[procPile.depiler()].info = po.getIpo();
+
+			iAddrExec = nbArgz + 2;
 		break;
 		case 54:
-		
-			tabSymb[pileRep.depiler()].info = po.getIpo() - 1; // ne met rien à jour
 			
+			nbArgz = 0;
 		break;
 		case 55:
-			po.produire(RETOUR);
-			po.produire(nbArgz);
-			iAddrExec = pileRep.depiler();
 		break;
 		case 56:
-			po.produire(APPEL);
-			po.produire(po.getIpo());
 		break;
 		case 254 :
 			po.produire(RESERVER);

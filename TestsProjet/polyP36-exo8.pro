@@ -9,6 +9,7 @@ debut
 	cond
 		v=0: drap:=vrai; r:=0; op:=vrai, {addition}
 		v=-1: drap:=vrai; r:=1; op:=faux  {multiplication}
+		aut drap:=vrai
 	fcond;
 	b:=drap;
 fin;
