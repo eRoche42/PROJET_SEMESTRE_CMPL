@@ -500,8 +500,26 @@ public class PtGen {
                     break;
             }
             // affecterg 'addrExec'
-            po.produire(AFFECTERG);
-            po.produire(tabSymb[indexLire].info);
+            if (bc == 1) {
+				po.produire(AFFECTERG);
+				po.produire(tabSymb[indexLire].info);
+			} else {
+				switch (tabSymb[indexLire].categorie) {
+					case PARAMFIXE :
+						UtilLex.messErr("L'affectation d'un paramètre fixe est interdite");
+						break;
+					case PARAMMOD :
+						po.produire(AFFECTERL);
+						po.produire(tabSymb[indexLire].info);
+						po.produire(1);
+						break;
+					case VARLOCALE :
+						po.produire(AFFECTERL);
+						po.produire(tabSymb[indexLire].info);
+						po.produire(0);
+						break;
+				}
+			}
             break;
 
         // ECRIRE :
