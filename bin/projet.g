@@ -41,7 +41,7 @@ unite  :   unitprog {PtGen.pt(255);} EOF
 unitprog
   : 'programme' ident ':'  
      declarations  
-     {PtGen.pt(60);} corps { System.out.println("succes, arret de la compilation "); }
+     {PtGen.pt(60);PtGen.pt(62);} corps { System.out.println("succes, arret de la compilation "); }
   ;
   
 unitmodule

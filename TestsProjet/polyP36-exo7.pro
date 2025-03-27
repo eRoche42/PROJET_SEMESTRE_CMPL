@@ -7,10 +7,8 @@ proc recurs mod (ent r)
 debut
 	lire(x);
 	cond
-		x=0: r:=0; op:=vrai, {addition}
-		x=-1: r:=1; op:=faux  {multiplication}
-	aut
-		recurs()(rx); 
+		x=0: r:=0; 
+	aut 
 		si op alors r:=x+rx sinon r:=x*rx fsi
 	fcond
 fin;

@@ -1,5 +1,31 @@
 FICHIER TestsProjet/polyP36-exo7.gen : 
 
    1  reserver        2
-   3  bincond         0
-   5 code instruction incorrect : 82
+   3  bincond        54
+   5  reserver        2
+   7  lirent    
+   8  affecterg       3
+  10  contenul        3   0
+  13  empiler         0
+  15  eg        
+  16  bsifaux        25
+  18  empiler         0
+  20  affecterl       0   1
+  23  bincond         0
+  25  contenul        1   0
+  28  bsifaux        42
+  30  contenul        3   0
+  33  contenul        4   0
+  36  add       
+  37  affecterl       0   1
+  40  bincond        52
+  42  contenul        3   0
+  45  contenul        4   0
+  48  mul       
+  49  affecterl       0   1
+  52  retour          1
+  54  empileradg      0
+  56  appel           5   1
+  59  contenug        0
+  61  ecrent    
+  62  arret     

@@ -1,7 +1,7 @@
 FICHIER TestsProjet/polyP36-exo8.gen : 
 
    1  reserver        2
-   3  bincond         0
+   3  bincond       132
    5  reserver        1
    7  empiler         0
    9  affecterl       5   0
@@ -32,5 +32,33 @@ FICHIER TestsProjet/polyP36-exo8.gen :
   67  contenul        5   0
   70  affecterl       2   1
   73  retour          3
-  75  bincond         0
-  77 code instruction incorrect : 132
+  75  bincond       132
+  77  reserver        2
+  79  lirent    
+  80  affecterg       3
+  82  contenul        3   0
+  85  empileradg      0
+  87  empileradg      4
+  89  appel           5   3
+  92  contenul        4   0
+  95  non       
+  96  bsifaux       130
+  98  empileradg      0
+ 100  appel          77   1
+ 103  contenul        1   0
+ 106  bsifaux       120
+ 108  contenul        3   0
+ 111  contenul        0   1
+ 114  add       
+ 115  affecterl       0   1
+ 118  bincond       130
+ 120  contenul        3   0
+ 123  contenul        0   1
+ 126  mul       
+ 127  affecterl       0   1
+ 130  retour          1
+ 132  empileradg      0
+ 134  appel          77   1
+ 137  contenug        0
+ 139  ecrent    
+ 140  arret     
