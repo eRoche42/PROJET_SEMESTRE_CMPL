@@ -9,7 +9,8 @@ debut
 fin;
 
 debut
+	fn := 8;
 	lire(n);
-	fact(n)(fn,fn); 
-	
+	fact(n)(fn); 
+	ecrire(fi);
 fin

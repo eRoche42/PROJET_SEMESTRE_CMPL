@@ -195,7 +195,8 @@ public class PtGen {
     
 
 	private static TPileRep procPile;
-
+	private static TPileRep condPile;
+	private static int compteurMethode;
 	/**
 	 *  initialisations A COMPLETER SI BESOIN
 	 *  -------------------------------------
@@ -225,7 +226,8 @@ public class PtGen {
 		reservNumber = 0;
 		nbArgz = 0;
 		procPile = new TPileRep();
-
+		condPile = new TPileRep();
+		compteurMethode = 0;
 	} // initialisations
 
 	/**
@@ -411,67 +413,67 @@ public class PtGen {
 		// BOUCLE
 		//-------------------------------------------------
 		case 26:
-			pileRep.empiler(po.getIpo());
+		condPile.empiler(po.getIpo());
 		break;
 		
 		case 27:
 			po.produire(BSIFAUX);
 			po.produire(1); //Dummy
 
-			pileRep.empiler(po.getIpo());
+			condPile.empiler(po.getIpo());
 		break;
 
 		case 28:
 			po.produire(BINCOND);
 			// + 2 padding pour atteindre l'instruction suivante
-			po.modifier(pileRep.depiler(), po.getIpo() + 2);
+			po.modifier(condPile.depiler(), po.getIpo() + 2);
 			// +1 padding.
-			po.produire(pileRep.depiler() + 1);
+			po.produire(condPile.depiler() + 1);
 		break;
 		//--------------------------------------------------
 		//isscond
 		case 29:
 		po.produire(BSIFAUX);
 		po.produire(1);//Dummy
-		pileRep.empiler(po.getIpo());
+		condPile.empiler(po.getIpo());
 		break;
 		case 30:
 		po.produire(BINCOND);
 		po.produire(1); //Dummy
-		po.modifier(pileRep.depiler(), po.getIpo()+1);	
-		pileRep.empiler(po.getIpo());
+		po.modifier(condPile.depiler(), po.getIpo()+1);	
+		condPile.empiler(po.getIpo());
 		break;
 		case 31:
-		po.modifier(pileRep.depiler(), po.getIpo()+1);
+		po.modifier(condPile.depiler(), po.getIpo()+1);
 		break;
 		//-------------------------------------------------
 		// 'cond' {PtGen.pt(32);}
         case 32:
-            pileRep.empiler(0);
+		condPile.empiler(0);
             break;
 
         //    'cond' expression {PtGen.pt(33);} : instructions (, expression {PtGen.pt(33);} : instructions)*
         case 33:
             po.produire(BSIFAUX);
             po.produire(0);
-            pileRep.empiler(po.getIpo());
+            condPile.empiler(po.getIpo());
             break;
 
         case 34:
             po.produire(BINCOND);
             // modif bsifaux precedent avec l'adresse des prochaines instructions
-            po.modifier(pileRep.depiler(), po.getIpo()+2);
+            po.modifier(condPile.depiler(), po.getIpo()+2);
             // dépilement pour produire l'adresse du bincond courant
-            po.produire(pileRep.depiler());
+            po.produire(condPile.depiler());
             // empilement de l'adresse du bincond courant
-            pileRep.empiler(po.getIpo());
+            condPile.empiler(po.getIpo());
             break;
 
         case 35:
             // attraper et sauver l'ipo de fin de case
             // sauver l'argument du bincond précédent
             //
-            int ipoAmodifier = pileRep.depiler();
+            int ipoAmodifier = condPile.depiler();
             int  mem = po.getElt(ipoAmodifier);
 			
             while (mem != 0) {
@@ -479,8 +481,7 @@ public class PtGen {
                 po.modifier(ipoAmodifier, po.getIpo()-2);
                 ipoAmodifier = mem;
             }
-				mem = po.getElt(ipoAmodifier);
-                po.modifier(ipoAmodifier, po.getIpo()-2);
+			
             break;
 		// LIRE :
         case 40:
@@ -520,6 +521,7 @@ public class PtGen {
 
 		//Debut PROC
 		case 50 :
+		compteurMethode++;
 			po.produire(BINCOND);
 			po.produire(0);
 			pileRep.empiler(po.getIpo());
@@ -583,12 +585,16 @@ public class PtGen {
 		//APPEL
 		case 59:
 			po.produire(APPEL);
-			po.produire(nbArgz);
 			po.produire(tabSymb[procPile.depiler()].info);
+			po.produire(nbArgz);
 			break;
 		
 		case 60:
-			po.modifier(pileRep.depiler(), po.getIpo()+1);
+			while (compteurMethode > 0){
+				po.modifier(pileRep.depiler(), po.getIpo()+1);
+				compteurMethode--;
+			}
+			
 		break;
 		case 61:
 		int index3 = presentIdent(1);

@@ -11,9 +11,13 @@ FICHIER TestsProjet/polyP35-exo6.gen :
   17  empiler         3
   19  affecterl       1   1
   22  retour          2
-  24  lirent    
-  25  affecterg       0
-  27  contenug        0
-  29  empileradg      1
-  33  appel           3   5
-  36  arret     
+  24  empiler         8
+  26  affecterg       1
+  28  lirent    
+  29  affecterg       0
+  31  contenug        0
+  33  empileradg      1
+  35  appel           5   2
+  38  contenug        1
+  40  ecrent    
+  41  arret     
