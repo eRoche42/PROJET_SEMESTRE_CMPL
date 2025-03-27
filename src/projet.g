@@ -41,7 +41,7 @@ unite  :   unitprog {PtGen.pt(255);} EOF
 unitprog
   : 'programme' ident ':'  
      declarations  
-     corps { System.out.println("succes, arret de la compilation "); }
+     {PtGen.pt(60);} corps { System.out.println("succes, arret de la compilation "); }
   ;
   
 unitmodule
@@ -77,7 +77,7 @@ type  : 'ent' {PtGen.pt(7);}
 decprocs:  (decproc ptvg)+
   ;
   
-decproc :  {PtGen.pt(60);} 'proc'  ident {PtGen.pt(50);} parfixe? parmod? {PtGen.pt(53);}consts? vars?  corps {PtGen.pt(54);}
+decproc :  {PtGen.pt(50);} 'proc'  ident {PtGen.pt(53);PtGen.pt(54);} parfixe? parmod? consts? vars?  corps {PtGen.pt(55);}
   ;
   
 ptvg  : ';'
@@ -137,10 +137,10 @@ affouappel
            )
   ;
   
-effixes : '(' (expression  {PtGen.pt(58); PtGen.pt(9);} (',' expression {PtGen.pt(58); PtGen.pt(9);}  )*)? ')'
+effixes : '(' (expression  {PtGen.pt(58);} (',' expression {PtGen.pt(58);}  )*)? ')'
   ;
   
-effmods :'(' (ident  {PtGen.pt(58); PtGen.pt(10);} (',' ident {PtGen.pt(58);PtGen.pt(10);}  )*)? ')'
+effmods :'(' (ident  {PtGen.pt(58); PtGen.pt(61);} (',' ident {PtGen.pt(58);PtGen.pt(61);}  )*)? ')'
   ; 
   
 expression: (exp1) ('ou'  exp1 {PtGen.pt(11);})*

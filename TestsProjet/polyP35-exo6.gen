@@ -1,0 +1,19 @@
+FICHIER TestsProjet/polyP35-exo6.gen : 
+
+   1  reserver        2
+   3  bincond        24
+   5  reserver        1
+   7  contenul        0   0
+  10  empiler         1
+  12  eg        
+  13  bsifaux        17
+  15  bincond        22
+  17  empiler         3
+  19  affecterl       1   1
+  22  retour          2
+  24  lirent    
+  25  affecterg       0
+  27  contenug        0
+  29  empileradg      1
+  33  appel           3   5
+  36  arret     

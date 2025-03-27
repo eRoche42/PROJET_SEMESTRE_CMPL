@@ -1,11 +1,11 @@
 FICHIER TestsProjet/polyP36-exo7.gen : 
 
    1  reserver        2
-   3  bincond         0
+   3  bincond        84
    5  reserver        2
    7  lirent    
-   8  affecterg       3
-  10  contenul        3   0
+   8  affecterg       2
+  10  contenul        2   0
   13  empiler         0
   15  eg        
   16  bsifaux        30

@@ -388,6 +388,8 @@ public class PtGen {
                     pileRep.empiler(tabSymb[index2].info);
                     pileRep.empiler(AFFECTERG);
                 } else {
+					System.out.println("Dans La fonction " + po.getIpo());
+
                     if (tabSymb[index2].categorie == PARAMFIXE) UtilLex.messErr("L'affectation d'un paramètre fixe est interdite");
                     else if (tabSymb[index2].categorie == VARLOCALE) pileRep.empiler(0);
                     else 
@@ -518,65 +520,81 @@ public class PtGen {
 
 		//Debut PROC
 		case 50 :
-		
-			procPile.empiler(iAddrExec);
-			iAddrExec = 0;
-			placeIdent(UtilLex.numIdCourant, PROC, NEUTRE, 0);
-			procPile.empiler(it);
-			placeIdent(-1, PRIVEE, NEUTRE, 0);
-			procPile.empiler(it);
-
+			po.produire(BINCOND);
+			po.produire(0);
+			pileRep.empiler(po.getIpo());
+			pileRep.empiler(iAddrExec);
+			iAddrExec = 2;
 
 
 		break;
 			//Ajout de l'ident PARAMFIX
 		case 51:
 		placeIdent(UtilLex.numIdCourant, PARAMFIXE, tCour, nbArgz++);
+		iAddrExec++;
 		break;
 			//Ajout de l'ident PARAMMOD
 		case 52:
 		placeIdent(UtilLex.numIdCourant, PARAMMOD, tCour, nbArgz++);
+		iAddrExec++;
 
 		break;
 
 		case 53:	
-			po.produire(BINCOND);
-			po.produire(0);
-			tabSymb[procPile.depiler()].info = nbArgz;
-			tabSymb[procPile.depiler()].info = po.getIpo()+1;
+			placeIdent(UtilLex.numIdCourant, PROC, NEUTRE, po.getIpo()+1);
+			placeIdent(-1, PRIVEE, NEUTRE, 0);
+			procPile.empiler(it);
 
-			iAddrExec = nbArgz + 2;
+			
 		break;
 
 		case 54:
-			po.produire(RETOUR);
-			po.produire(nbArgz);
-			iAddrExec = procPile.depiler();
-			nbArgz =0;
-			bc = 1;
+				bc = it +1;
 			break;
-
+		//Fin proc
+		case 55:
+		iAddrExec = pileRep.depiler();
+		tabSymb[procPile.depiler()].info = nbArgz;
+		afftabSymb();
+		bc = 1;
+		
+			while (tabSymb[it].categorie == VARLOCALE) {
+				tabSymb[it].code = -1;
+				it-- ;
+				
+			}
+			
+		po.produire(RETOUR);
+		po.produire(nbArgz);
+		nbArgz = 0;
+		break;
 		case 56:
 		break;
 		
 		case 57:
-			procPile.empiler(nbArgz);
+		int index4 = presentIdent(1);
+		if(index4 == 0) UtilLex.messErr("lire(): La variable "+ UtilLex.numIdCourant +" n'existe pas");
 			nbArgz = 0;
-			procPile.empiler(UtilLex.numIdCourant);
+			procPile.empiler(index4);
 		break;
 		case 58:
 			nbArgz +=1;
 		break;
+		//APPEL
 		case 59:
 			po.produire(APPEL);
 			po.produire(nbArgz);
 			po.produire(tabSymb[procPile.depiler()].info);
-			nbArgz = procPile.depiler();
 			break;
 		
 		case 60:
-		bc = it +3 ;
-
+			po.modifier(pileRep.depiler(), po.getIpo()+1);
+		break;
+		case 61:
+		int index3 = presentIdent(1);
+            if(index3 == 0) {UtilLex.messErr("Ident non présent dans tabSymb");}
+		po.produire(EMPILERADG);
+		po.produire(tabSymb[index3].info);
 		break;
 		case 254 :
 			po.produire(RESERVER);
