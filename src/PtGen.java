@@ -470,20 +470,20 @@ public class PtGen {
             condPile.empiler(po.getIpo());
             break;
 
-        case 35:
-            // attraper et sauver l'ipo de fin de case
-            // sauver l'argument du bincond précédent
-            //
-            int ipoAmodifier = condPile.depiler();
-            int  mem = po.getElt(ipoAmodifier);
-			
-            while (mem != 0) {
-                mem = po.getElt(ipoAmodifier);
-                po.modifier(ipoAmodifier, po.getIpo()-2);
-                ipoAmodifier = mem;
-            }
-			
-            break;
+	case 35:
+		// attraper et sauver l'ipo de fin de case
+		// sauver l'argument du bincond précédent
+		//
+		int ipoAmodifier = condPile.depiler();
+		int mem = po.getElt(ipoAmodifier);
+
+		while (mem != 0) {
+			mem = po.getElt(ipoAmodifier);
+			po.modifier(ipoAmodifier, po.getIpo() + 1);
+			ipoAmodifier = mem;
+		}
+		break;
+
 		// LIRE :
         case 40:
             int indexLire = presentIdent(1);
