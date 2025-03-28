@@ -118,9 +118,9 @@ inssi : 'si' expression {PtGen.pt(29);}  'alors' instructions ('sinon' {PtGen.pt
   
 inscond : 'cond' {PtGen.pt(32);} expression {PtGen.pt(33);} ':' instructions 
           (  ',' {PtGen.pt(34);}  expression {PtGen.pt(33);} ':' instructions )* 
-          ('aut' {PtGen.pt(34);} instructions |  )
-          'fcond' {PtGen.pt(35);}
-  ;
+          ('aut' {PtGen.pt(34);} instructions {PtGen.pt(35);}|  )
+          'fcond' 
+  ; 
   
 boucle  : 'ttq' {PtGen.pt(26);} expression {PtGen.pt(27);}'faire' instructions'fait' {PtGen.pt(28);} 
   ;

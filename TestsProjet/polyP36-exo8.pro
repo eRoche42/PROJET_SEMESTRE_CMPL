@@ -9,8 +9,9 @@ debut
 	cond
 		v=0: drap:=vrai; r:=0; op:=vrai, {addition}
 		v=-1: drap:=vrai; r:=1; op:=faux  {multiplication}
-		aut drap:=vrai
+		aut drap:=faux
 	fcond;
+	
 	b:=drap;
 fin;
 
@@ -19,6 +20,7 @@ proc recurs mod (ent r)
 debut
 	lire(x);
 	verifdrapeau(x)(r, marq);
+	ecrire(r);
 	si non marq alors
 		recurs()(r); 
 		si op alors r:=x+r sinon r:=x*r fsi

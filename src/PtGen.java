@@ -398,7 +398,6 @@ public class PtGen {
 						pileRep.empiler(1);
                    
 					}
-					System.out.println(tabSymb[index2].code + "  index2 " + index2);
 					pileRep.empiler(tabSymb[index2].info);
                     pileRep.empiler(AFFECTERL);
                 }
@@ -473,13 +472,13 @@ public class PtGen {
         case 35:
             // attraper et sauver l'ipo de fin de case
             // sauver l'argument du bincond précédent
-            //
             int ipoAmodifier = condPile.depiler();
             int  mem = po.getElt(ipoAmodifier);
 			
             while (mem != 0) {
                 mem = po.getElt(ipoAmodifier);
-                po.modifier(ipoAmodifier, po.getIpo()-2);
+				
+                po.modifier(ipoAmodifier, po.getIpo()+1);
                 ipoAmodifier = mem;
             }
 			

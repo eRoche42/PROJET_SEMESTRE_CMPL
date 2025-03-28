@@ -16,17 +16,18 @@ FICHIER TestsProjet/test_simple.gen :
   21  contenug        0
   23  bsifaux        30
   25  empiler         1
-  27  ecrent    
-  28  bincond        48
+  27  ecrbool   
+  28  bincond        51
   30  contenug        1
   32  bsifaux        39
   34  empiler         3
-  36  ecrent    
-  37  bincond        48
+  36  ecrbool   
+  37  bincond        51
   39  contenug        2
   41  bsifaux        48
   43  contenug        0
-  45  ecrent    
-  46  bincond        48
+  45  ecrbool   
+  46  bincond        51
   48  empiler         5
-  50  ecrent    
+  50  ecrbool   
+  51  arret     
