@@ -149,7 +149,7 @@ expression: (exp1) ('ou' {PtGen.pt(63);} exp1 {PtGen.pt(63);PtGen.pt(11);})*
 exp1  : exp2 ('et' {PtGen.pt(63);} exp2 {PtGen.pt(63);PtGen.pt(12);} )*
   ;
   
-exp2  : 'non' exp2 {PtGen.pt(13);}
+exp2  : 'non' exp2 {PtGen.pt(63);PtGen.pt(13);}
   | exp3  
   ;
   
