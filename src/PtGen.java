@@ -622,6 +622,16 @@ public class PtGen {
 			bc = 1;
 		break;
 
+
+
+		case 63:
+			int verificationBool = presentIdent(1);
+			if(verificationBool == 0) {UtilLex.messErr("Ident non présent dans tabSymb");}
+			if(tabSymb[verificationBool].type != BOOL) {UtilLex.messErr("Ident n'est pas un bool");}
+
+		break;
+
+
 		case 254 :
 			po.produire(RESERVER);
 			po.produire(reservNumber);
