@@ -181,8 +181,8 @@ primaire: valeur {PtGen.pt(9);}
   ;
   
 valeur  : nbentier {PtGen.pt(7); PtGen.pt(3);}
-  | '+' nbentier {PtGen.pt(7); PtGen.pt(3);}
-  | '-' nbentier {PtGen.pt(7); PtGen.pt(4);}
+  | '+'{PtGen.pt(64);} nbentier {PtGen.pt(7); PtGen.pt(3);}
+  | '-'{PtGen.pt(64);} nbentier {PtGen.pt(7); PtGen.pt(4);}
   | 'vrai' {PtGen.pt(8); PtGen.pt(5);}
   | 'faux' {PtGen.pt(8); PtGen.pt(6);}
   ;

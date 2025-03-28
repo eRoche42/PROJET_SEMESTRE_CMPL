@@ -623,14 +623,21 @@ public class PtGen {
 		break;
 
 
-
+			//Vérification de type BOOL
 		case 63:
+		    if(tCour == BOOL) break;
 			int verificationBool = presentIdent(1);
 			if(verificationBool == 0) {UtilLex.messErr("Ident non présent dans tabSymb");}
 			if(tabSymb[verificationBool].type != BOOL) {UtilLex.messErr("Ident n'est pas un bool");}
 
 		break;
+		case 64:
+		if(tCour == ENT) break;
+		int verificationEnt = presentIdent(1);
+		if(verificationEnt == 0) {UtilLex.messErr("Ident non présent dans tabSymb");}
+		if(tabSymb[verificationEnt].type != BOOL) {UtilLex.messErr("Ident n'est pas un bool");}
 
+	break;
 
 		case 254 :
 			po.produire(RESERVER);
