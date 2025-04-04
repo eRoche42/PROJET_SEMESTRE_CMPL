@@ -195,7 +195,9 @@ public class PtGen {
     
 
 	private static TPileRep procPile;
-
+	private static TPileRep condPile;
+	private static TPileRep procedurePile;
+	private static int compteurProcedure;
 	/**
 	 *  initialisations A COMPLETER SI BESOIN
 	 *  -------------------------------------
@@ -225,7 +227,9 @@ public class PtGen {
 		reservNumber = 0;
 		nbArgz = 0;
 		procPile = new TPileRep();
-
+		condPile = new TPileRep();
+		procedurePile = new TPileRep();
+		compteurProcedure = 0;
 	} // initialisations
 
 	/**
@@ -248,7 +252,7 @@ public class PtGen {
 				UtilLex.messErr("Réaffectation de constantes interdite"); // Envoi Erreur
 				break;
 			}
-			if(bc !=0){
+			if(bc !=1){
 				placeIdent(UtilLex.numIdCourant, VARLOCALE, tCour, iAddrExec++);
 			}else{
 				placeIdent(UtilLex.numIdCourant, CONSTANTE, tCour, vCour);
@@ -262,7 +266,7 @@ public class PtGen {
 			UtilLex.messErr("Ident déjà déclaré"); // Envoi Erreur
 			break;
 		}
-			if(bc != 0){
+			if(bc != 1){
 				placeIdent(UtilLex.numIdCourant, VARLOCALE, tCour, iAddrExec++);
 				reservNumber += 1;
 			}else{
@@ -302,7 +306,7 @@ public class PtGen {
 		break;
 		// expression avec un IDENT
 		case 10:
-            int index = presentIdent(bc);
+            int index = presentIdent(1);
 
             if(index == 0) UtilLex.messErr("Non présent dans tab symb");
 
@@ -318,9 +322,11 @@ public class PtGen {
 				}
                 else {
 					po.produire(CONTENUL);
+					po.produire(tabSymb[index].info);
+
                 if (tabSymb[index].categorie == PARAMMOD) po.produire(1);
                 else po.produire(0);
-			}
+				}
             }
             break;
 		//OU
@@ -378,7 +384,7 @@ public class PtGen {
 
 		//affecter
 		case 24 :
-            int index2 = presentIdent(bc);
+            int index2 = presentIdent(1);
             if(index2 == 0) {UtilLex.messErr("Ident non présent dans tabSymb");}
             else{
                 if (bc == 1) {
@@ -388,10 +394,12 @@ public class PtGen {
                     if (tabSymb[index2].categorie == PARAMFIXE) UtilLex.messErr("L'affectation d'un paramètre fixe est interdite");
                     else if (tabSymb[index2].categorie == VARLOCALE) pileRep.empiler(0);
                     else 
-					{pileRep.empiler(1);
-                    pileRep.empiler(tabSymb[index2].info);
-                    pileRep.empiler(AFFECTERL);
+					{
+						pileRep.empiler(1);
+                   
 					}
+					pileRep.empiler(tabSymb[index2].info);
+                    pileRep.empiler(AFFECTERL);
                 }
             }
             break;
@@ -405,76 +413,75 @@ public class PtGen {
 		// BOUCLE
 		//-------------------------------------------------
 		case 26:
-			pileRep.empiler(po.getIpo());
+		condPile.empiler(po.getIpo());
 		break;
 		
 		case 27:
 			po.produire(BSIFAUX);
 			po.produire(1); //Dummy
 
-			pileRep.empiler(po.getIpo());
+			condPile.empiler(po.getIpo());
 		break;
 
 		case 28:
 			po.produire(BINCOND);
 			// + 2 padding pour atteindre l'instruction suivante
-			po.modifier(pileRep.depiler(), po.getIpo() + 2);
+			po.modifier(condPile.depiler(), po.getIpo() + 2);
 			// +1 padding.
-			po.produire(pileRep.depiler() + 1);
+			po.produire(condPile.depiler() + 1);
 		break;
 		//--------------------------------------------------
 		//isscond
 		case 29:
-		po.produire(BSIFAUX);
-		po.produire(1);//Dummy
-		pileRep.empiler(po.getIpo());
+			po.produire(BSIFAUX);
+			po.produire(1);//Dummy
+			condPile.empiler(po.getIpo());
 		break;
 		case 30:
-		po.produire(BINCOND);
-		po.produire(1); //Dummy
-		po.modifier(pileRep.depiler(), po.getIpo()+1);	
-		pileRep.empiler(po.getIpo());
+			po.produire(BINCOND);
+			po.produire(1); //Dummy
+			po.modifier(condPile.depiler(), po.getIpo()+1);	
+			condPile.empiler(po.getIpo());
 		break;
 		case 31:
-		po.modifier(pileRep.depiler(), po.getIpo()+1);
+			po.modifier(condPile.depiler(), po.getIpo()+1);
 		break;
 		//-------------------------------------------------
 		// 'cond' {PtGen.pt(32);}
         case 32:
-            pileRep.empiler(0);
+		condPile.empiler(0);
             break;
 
         //    'cond' expression {PtGen.pt(33);} : instructions (, expression {PtGen.pt(33);} : instructions)*
         case 33:
             po.produire(BSIFAUX);
             po.produire(0);
-            pileRep.empiler(po.getIpo());
+            condPile.empiler(po.getIpo());
             break;
 
         case 34:
             po.produire(BINCOND);
             // modif bsifaux precedent avec l'adresse des prochaines instructions
-            po.modifier(pileRep.depiler(), po.getIpo()+2);
+            po.modifier(condPile.depiler(), po.getIpo()+2);
             // dépilement pour produire l'adresse du bincond courant
-            po.produire(pileRep.depiler());
+            po.produire(condPile.depiler());
             // empilement de l'adresse du bincond courant
-            pileRep.empiler(po.getIpo());
+            condPile.empiler(po.getIpo());
             break;
 
         case 35:
             // attraper et sauver l'ipo de fin de case
             // sauver l'argument du bincond précédent
-            //
-            int ipoAmodifier = pileRep.depiler();
+            int ipoAmodifier = condPile.depiler();
             int  mem = po.getElt(ipoAmodifier);
 			
             while (mem != 0) {
                 mem = po.getElt(ipoAmodifier);
-                po.modifier(ipoAmodifier, po.getIpo()-2);
+				
+                po.modifier(ipoAmodifier, po.getIpo()+1);
                 ipoAmodifier = mem;
             }
-				mem = po.getElt(ipoAmodifier);
-                po.modifier(ipoAmodifier, po.getIpo()-2);
+			
             break;
 		// LIRE :
         case 40:
@@ -492,8 +499,26 @@ public class PtGen {
                     break;
             }
             // affecterg 'addrExec'
-            po.produire(AFFECTERG);
-            po.produire(tabSymb[indexLire].info);
+            if (bc == 1) {
+				po.produire(AFFECTERG);
+				po.produire(tabSymb[indexLire].info);
+			} else {
+				switch (tabSymb[indexLire].categorie) {
+					case PARAMFIXE :
+						UtilLex.messErr("L'affectation d'un paramètre fixe est interdite");
+						break;
+					case PARAMMOD :
+						po.produire(AFFECTERL);
+						po.produire(tabSymb[indexLire].info);
+						po.produire(1);
+						break;
+					case VARLOCALE :
+						po.produire(AFFECTERL);
+						po.produire(tabSymb[indexLire].info);
+						po.produire(0);
+						break;
+				}
+			}
             break;
 
         // ECRIRE :
@@ -514,64 +539,111 @@ public class PtGen {
 
 		//Debut PROC
 		case 50 :
-		
-			procPile.empiler(iAddrExec);
-			iAddrExec =0;
-			placeIdent(UtilLex.numIdCourant, PROC, NEUTRE, 0);
-			procPile.empiler(it);
-			placeIdent(-1, PRIVEE, NEUTRE, 0);
-			procPile.empiler(it);
-
-
-
-		break;
-			//Ajout de l'ident PARAMFIX
-		case 51:
-		placeIdent(UtilLex.numIdCourant, PARAMFIXE, tCour, nbArgz++);
-		break;
-			//Ajout de l'ident PARAMMOD
-		case 52:
-		placeIdent(UtilLex.numIdCourant, PARAMFIXE, tCour, nbArgz++);
-
-		break;
-
-		case 53:	
+			compteurProcedure++;
 			po.produire(BINCOND);
 			po.produire(0);
-			tabSymb[procPile.depiler()].info = nbArgz;
-			tabSymb[procPile.depiler()].info = po.getIpo()+1;
+			procedurePile.empiler(po.getIpo());
+			pileRep.empiler(iAddrExec);
+			iAddrExec = 2;
 
-			iAddrExec = nbArgz + 2;
+		break;
+
+			//Ajout de l'ident PARAMFIX
+		case 51:
+			placeIdent(UtilLex.numIdCourant, PARAMFIXE, tCour, nbArgz++);
+			iAddrExec++;
+		break;
+
+			//Ajout de l'ident PARAMMOD
+		case 52:
+			placeIdent(UtilLex.numIdCourant, PARAMMOD, tCour, nbArgz++);
+			iAddrExec++;
+		break;
+			//Ajout de l'ident PARAMMOD
+		case 53:	
+			placeIdent(UtilLex.numIdCourant, PROC, NEUTRE, po.getIpo()+1);
+			placeIdent(-1, PRIVEE, NEUTRE, 0);
+			procPile.empiler(it);
 		break;
 
 		case 54:
-		po.produire(RETOUR);
-		po.produire(nbArgz);
-		iAddrExec = procPile.depiler();
-		nbArgz =0;
+			bc = it +1;
 		break;
-
+		//Fin proc
+		case 55:
+			iAddrExec = pileRep.depiler();
+			tabSymb[procPile.depiler()].info = nbArgz;
+			afftabSymb();
+			
+			int j = it;
+				while (tabSymb[j].categorie == VARLOCALE) {
+					tabSymb[j].code = -1;
+					j--;	
+				}
+				
+			po.produire(RETOUR);
+			po.produire(nbArgz);
+			nbArgz = 0;
+		break;
 		case 56:
 		break;
+		
+		case 57:
+			int index4 = presentIdent(1);
+			if(index4 == 0) UtilLex.messErr("lire(): La variable "+ UtilLex.numIdCourant +" n'existe pas");
+				nbArgz = 0;
+				procPile.empiler(index4);
+		break;
+		case 58:
+			nbArgz +=1;
+		break;
+		//APPEL
+		case 59:
+			po.produire(APPEL);
+			po.produire(tabSymb[procPile.depiler()].info);
+			po.produire(nbArgz);
+		break;
+		
+		case 60:
+			while (compteurProcedure > 0){
+				po.modifier(procedurePile.depiler(), po.getIpo()+1);
+				compteurProcedure--;
+			}
+			
+		break;
+		case 61:
+			int index3 = presentIdent(1);
+            if(index3 == 0) {UtilLex.messErr("Ident non présent dans tabSymb");}
+			po.produire(EMPILERADG);
+			po.produire(tabSymb[index3].info);
+		break;
+
+		case 62:
+			bc = 1;
+		break;
+
+
+			//Vérification de type BOOL
+		case 63:
+		    if(tCour == BOOL) break;
+			int verificationBool = presentIdent(1);
+			if(verificationBool == 0) {UtilLex.messErr("Ident non présent dans tabSymb");}
+			if(tabSymb[verificationBool].type != BOOL) {UtilLex.messErr("Ident n'est pas un bool");}
+
+		break;
+		case 64:
+		if(tCour == ENT) break;
+		int verificationEnt = presentIdent(1);
+		if(verificationEnt == 0) {UtilLex.messErr("Ident non présent dans tabSymb");}
+		if(tabSymb[verificationEnt].type != ENT) {UtilLex.messErr("Ident n'est pas un ent");}
+
+	break;
+
 		case 254 :
 			po.produire(RESERVER);
 			po.produire(reservNumber);
 			reservNumber = 0 ;
 		break;
-		case 57:
-			procPile.empiler(nbArgz);
-			nbArgz = 0;
-			procPile.empiler(UtilLex.numIdCourant);
-		break;
-		case 58:
-			nbArgz +=1;
-		break;
-		case 59:
-			po.produire(APPEL);
-			po.produire(nbArgz);
-			po.produire(tabSymb[procPile.depiler()].info);
-			nbArgz = procPile.depiler();
-			break;
 
 		case 255 : 
 			po.produire(ARRET);

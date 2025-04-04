@@ -635,7 +635,7 @@ public class PtGen {
 		if(tCour == ENT) break;
 		int verificationEnt = presentIdent(1);
 		if(verificationEnt == 0) {UtilLex.messErr("Ident non présent dans tabSymb");}
-		if(tabSymb[verificationEnt].type != BOOL) {UtilLex.messErr("Ident n'est pas un bool");}
+		if(tabSymb[verificationEnt].type != ENT) {UtilLex.messErr("Ident n'est pas un ent");}
 
 	break;
 

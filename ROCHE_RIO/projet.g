@@ -41,7 +41,7 @@ unite  :   unitprog {PtGen.pt(255);} EOF
 unitprog
   : 'programme' ident ':'  
      declarations  
-     corps { System.out.println("succes, arret de la compilation "); }
+     {PtGen.pt(60);PtGen.pt(62);} corps { System.out.println("succes, arret de la compilation "); }
   ;
   
 unitmodule
@@ -77,7 +77,7 @@ type  : 'ent' {PtGen.pt(7);}
 decprocs:  (decproc ptvg)+
   ;
   
-decproc :  'proc'  ident {PtGen.pt(50);} parfixe? parmod? {PtGen.pt(53);}consts? vars?  corps {PtGen.pt(54);}
+decproc :  {PtGen.pt(50);} 'proc'  ident {PtGen.pt(53);PtGen.pt(54);} parfixe? parmod? consts? vars?  corps {PtGen.pt(55);}
   ;
   
 ptvg  : ';'
@@ -118,9 +118,9 @@ inssi : 'si' expression {PtGen.pt(29);}  'alors' instructions ('sinon' {PtGen.pt
   
 inscond : 'cond' {PtGen.pt(32);} expression {PtGen.pt(33);} ':' instructions 
           (  ',' {PtGen.pt(34);}  expression {PtGen.pt(33);} ':' instructions )* 
-          ('aut' {PtGen.pt(34);} instructions |  )
-          'fcond' {PtGen.pt(35);}
-  ;
+          ('aut' {PtGen.pt(34);} instructions {PtGen.pt(35);}|  )
+          'fcond' 
+  ; 
   
 boucle  : 'ttq' {PtGen.pt(26);} expression {PtGen.pt(27);}'faire' instructions'fait' {PtGen.pt(28);} 
   ;
@@ -137,19 +137,19 @@ affouappel
            )
   ;
   
-effixes : '(' (expression  {PtGen.pt(58); PtGen.pt(9);} (',' expression {PtGen.pt(58); PtGen.pt(9);}  )*)? ')'
+effixes : '(' (expression  {PtGen.pt(58);} (',' expression {PtGen.pt(58);}  )*)? ')'
   ;
   
-effmods :'(' (ident  {PtGen.pt(58); PtGen.pt(10);} (',' ident {PtGen.pt(58);PtGen.pt(10);}  )*)? ')'
+effmods :'(' (ident  {PtGen.pt(58); PtGen.pt(61);} (',' ident {PtGen.pt(58);PtGen.pt(61);}  )*)? ')'
   ; 
   
-expression: (exp1) ('ou'  exp1 {PtGen.pt(11);})*
+expression: (exp1) ('ou' {PtGen.pt(63);} exp1 {PtGen.pt(63);PtGen.pt(11);})*
   ;
   
-exp1  : exp2 ('et'  exp2 {PtGen.pt(12);} )*
+exp1  : exp2 ('et' {PtGen.pt(63);} exp2 {PtGen.pt(63);PtGen.pt(12);} )*
   ;
   
-exp2  : 'non' exp2 {PtGen.pt(13);}
+exp2  : 'non' exp2 {PtGen.pt(63);PtGen.pt(13);}
   | exp3  
   ;
   
@@ -181,8 +181,8 @@ primaire: valeur {PtGen.pt(9);}
   ;
   
 valeur  : nbentier {PtGen.pt(7); PtGen.pt(3);}
-  | '+' nbentier {PtGen.pt(7); PtGen.pt(3);}
-  | '-' nbentier {PtGen.pt(7); PtGen.pt(4);}
+  | '+'{PtGen.pt(64);} nbentier {PtGen.pt(7); PtGen.pt(3);}
+  | '-'{PtGen.pt(64);} nbentier {PtGen.pt(7); PtGen.pt(4);}
   | 'vrai' {PtGen.pt(8); PtGen.pt(5);}
   | 'faux' {PtGen.pt(8); PtGen.pt(6);}
   ;
