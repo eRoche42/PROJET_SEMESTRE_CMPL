@@ -1,0 +1,22 @@
+FICHIER TestsProjet/bincond1.gen : 
+
+   1  reserver        3
+   3  lirebool  
+   4  affecterg       0
+   6  lirebool  
+   7  affecterg       1
+   9  lirebool  
+  10  affecterg       2
+  12  contenug        0
+  14  bsifaux        21
+  16  empiler         1
+  18  ecrent    
+  19  bincond        30
+  21  contenug        1
+  23  bsifaux        30
+  25  empiler         2
+  27  ecrent    
+  28  bincond        30
+  30  empiler         3
+  32  ecrent    
+  33  arret     

@@ -118,7 +118,7 @@ inssi : 'si' expression {PtGen.pt(29);}  'alors' instructions ('sinon' {PtGen.pt
   
 inscond : 'cond' {PtGen.pt(32);} expression {PtGen.pt(33);} ':' instructions 
           (  ',' {PtGen.pt(34);}  expression {PtGen.pt(33);} ':' instructions )* 
-          ('aut' {PtGen.pt(34);} instructions {PtGen.pt(35);}|  )
+          ('aut' {PtGen.pt(34);PtGen.pt(35);} instructions | {PtGen.pt(36);} )
           'fcond' 
   ; 
   
@@ -164,14 +164,14 @@ exp3  : exp4
   ;
   
 exp4  : exp5 
-        ('+'  exp5 {PtGen.pt(20);}
-        |'-'  exp5 {PtGen.pt(21);}
+        ('+' {PtGen.pt(64);} exp5 {PtGen.pt(64); PtGen.pt(20);}
+        |'-' {PtGen.pt(64);} exp5 {PtGen.pt(64); PtGen.pt(21);}
         )*
   ;
   
 exp5  : primaire 
-        (    '*'   primaire {PtGen.pt(22);}
-          | 'div'  primaire {PtGen.pt(23);}
+        (    '*'  {PtGen.pt(64);} primaire {PtGen.pt(64); PtGen.pt(22);}
+          | 'div' {PtGen.pt(64);} primaire {PtGen.pt(64); PtGen.pt(23);}
         )*
   ;
   
