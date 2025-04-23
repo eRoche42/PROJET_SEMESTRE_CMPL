@@ -387,37 +387,34 @@ public class PtGen {
 				break;
 
 			// affecter
-			case 24:
-				int index2 = presentIdent(1);
-				if (index2 == 0) {
-					UtilLex.messErr("Ident non présent dans tabSymb");
-				} else {
-					if (tabSymb[index2].categorie == VARGLOBALE) {
-						pileRep.empiler(tabSymb[index2].info);
-						pileRep.empiler(AFFECTERG);
-					} else {
-						if (tabSymb[index2].categorie == PARAMFIXE)
-							UtilLex.messErr("L'affectation d'un paramètre fixe est interdite");
-						else if (tabSymb[index2].categorie == VARLOCALE)
-							pileRep.empiler(0);
-						else
-							pileRep.empiler(1); 
-
-						pileRep.empiler(tabSymb[index2].info); 
-						pileRep.empiler(AFFECTERL); 
-						affl = true;
-					}
+			//affecter
+		case 24 :
+		int index2 = presentIdent(1);
+		if(index2 == 0) {UtilLex.messErr("Ident non présent dans tabSymb");}
+		else{
+			if (bc == 1) {
+				pileRep.empiler(tabSymb[index2].info);
+				pileRep.empiler(AFFECTERG);
+			} else {
+				if (tabSymb[index2].categorie == PARAMFIXE) UtilLex.messErr("L'affectation d'un paramètre fixe est interdite");
+				else if (tabSymb[index2].categorie == VARLOCALE) pileRep.empiler(0);
+				else 
+				{
+					pileRep.empiler(1);
+			   
 				}
-				break;
-			// fin affecter
-			case 25:
-				po.produire(pileRep.depiler());
-				po.produire(pileRep.depiler());
-				if (affl) {
-					po.produire(pileRep.depiler());
-					affl = false;
-				}
-				break;
+				System.out.println(tabSymb[index2].code + "  index2 " + index2);
+				pileRep.empiler(tabSymb[index2].info);
+				pileRep.empiler(AFFECTERL);
+			}
+		}
+		break;
+	//fin affecter
+	case 25:
+		po.produire(pileRep.depiler());
+		po.produire(pileRep.depiler());
+		if (bc != 1) po.produire(pileRep.depiler());
+	break;
 
 			// BOUCLE
 			// -------------------------------------------------
@@ -499,13 +496,11 @@ public class PtGen {
 				int ipoAmodifiers = pileRep.depiler();
 				int mems = po.getElt(ipoAmodifiers);
 
-				while (mems != 0) {
 					mems = po.getElt(ipoAmodifiers);
 					po.modifier(ipoAmodifiers, po.getIpo() + 1);
 					ipoAmodifier = mems;
-				}
-				mems = po.getElt(ipoAmodifiers);
-				po.modifier(ipoAmodifiers, po.getIpo() + 1);
+				
+				
 
 				break;
 			// LIRE :

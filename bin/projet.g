@@ -118,7 +118,7 @@ inssi : 'si' expression {PtGen.pt(29);}  'alors' instructions ('sinon' {PtGen.pt
   
 inscond : 'cond' {PtGen.pt(32);} expression {PtGen.pt(33);} ':' instructions 
           (  ',' {PtGen.pt(34);}  expression {PtGen.pt(33);} ':' instructions )* 
-          ('aut' {PtGen.pt(34);PtGen.pt(35);} instructions | {PtGen.pt(36);} )
+          ('aut' {PtGen.pt(34);PtGen.pt(35);} instructions {PtGen.pt(36);}| {PtGen.pt(36);} )
           'fcond' 
   ; 
   
@@ -132,7 +132,7 @@ ecriture: 'ecrire' '(' expression {PtGen.pt(41);}  ( ',' expression {PtGen.pt(41
    ;
   
 affouappel
-  : ident {PtGen.pt(24);} (    ':=' expression {PtGen.pt(25);}
+  : ident  ( {PtGen.pt(24);}   ':=' expression {PtGen.pt(25);}
             |   {PtGen.pt(57);} (effixes (effmods)?)? {PtGen.pt(59);} 
            )
   ;
