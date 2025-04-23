@@ -1,66 +1,65 @@
 FICHIER TestsProjet/polyP36-exo8.gen : 
 
    1  reserver        2
-   3  bincond       137
+   3  bincond       136
    5  reserver        1
    7  empiler         0
    9  affecterl       5   0
   12  contenul        0   0
   15  empiler         0
   17  eg        
-  18  bsifaux        37
+  18  bsifaux        36
   20  empiler         1
   22  affecterl       5   0
   25  empiler         0
-  27  affecterl       1   1
+  27  affecterl     1   1
   30  empiler         1
-  32  affecterl       1   1
-  35  bincond        67
-  37  contenul        0   0
-  40  empiler        -1
-  42  eg        
-  43  bsifaux        62
-  45  empiler         1
-  47  affecterl       5   0
-  50  empiler         1
-  52  affecterl       1   1
-  55  empiler         0
-  57  affecterl       1   1
-  60  bincond        67
-  62  empiler         0
-  64  affecterl       5   0
-  67  contenul        5   0
-  70  affecterl       2   1
-  73  retour          3
-  75  bincond       137
-  77  reserver        2
-  79  lirent    
-  80  affecterl       3   0
-  83  contenul        3   0
-  86  empileradg      0
-  88  empileradg      4
-  90  appel           5   3
-  93  contenul        0   1
-  96  ecrent    
-  97  contenul        4   0
- 100  non       
- 101  bsifaux       135
- 103  empileradg      0
- 105  appel          77   1
- 108  contenul        1   0
- 111  bsifaux       125
- 113  contenul        3   0
- 116  contenul        0   1
- 119  add       
- 120  affecterl       0   1
- 123  bincond       135
- 125  contenul        3   0
- 128  contenul        0   1
- 131  mul       
- 132  affecterl       0   1
- 135  retour          1
- 137  empileradg      0
- 139  appel          77   1
- 142  contenug        0
- 144  ecrent    
- 145  arret     
+  32  affecterg       1
+  34  bincond         0
+  36  contenul        0   0
+  39  empiler        -1
+  41  eg        
+  42  bsifaux        60
+  44  empiler         1
+  46  affecterl       5   0
+  49  empiler         1
+  51  affecterl       1   1
+  54  empiler         0
+  56  affecterg       1
+  58  bincond        60
+  60  empiler         0
+  62  affecterl       5   0
+  65  contenul        5   0
+  68  affecterl       2   1
+  71  retour          3
+  73  reserver        2
+  75  lirent    
+  76  affecterl       3   0
+  79  contenul        3   0
+  82  empileradl      0   1
+  85  empileradl      4   0
+  88  appel           5   3
+  91  contenul        0   1
+  94  ecrent    
+  95  contenul        4   0
+  98  non       
+  99  bsifaux         1
+ 101  empileradl      0   1
+ 104  appel          73   1
+ 107  contenul        1   0
+ 110  bsifaux       124
+ 112  contenul        3   0
+ 115  contenul        0   1
+ 118  add       
+ 119  affecterl       0   1
+ 122  bincond       134
+ 124  contenul        3   0
+ 127  contenul        0   1
+ 130  mul       
+ 131  affecterl       0   1
+ 134  retour          1
+ 136  empileradg      0
+ 138  appel          73   1
+ 141  contenug        0
+ 143  ecrent    
+ 144  arret     

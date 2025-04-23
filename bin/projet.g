@@ -41,7 +41,7 @@ unite  :   unitprog {PtGen.pt(255);} EOF
 unitprog
   : 'programme' ident ':'  
      declarations  
-     {PtGen.pt(60);PtGen.pt(62);} corps { System.out.println("succes, arret de la compilation "); }
+     {PtGen.pt(62);} corps { System.out.println("succes, arret de la compilation "); }
   ;
   
 unitmodule
@@ -74,7 +74,7 @@ type  : 'ent' {PtGen.pt(7);}
   |     'bool' {PtGen.pt(8);}
   ;
   
-decprocs:  (decproc ptvg)+
+decprocs: {PtGen.pt(253);} (decproc ptvg)+ {PtGen.pt(60);}
   ;
   
 decproc :  {PtGen.pt(50);} 'proc'  ident {PtGen.pt(53);PtGen.pt(54);} parfixe? parmod? consts? vars?  corps {PtGen.pt(55);}
@@ -181,8 +181,8 @@ primaire: valeur {PtGen.pt(9);}
   ;
   
 valeur  : nbentier {PtGen.pt(7); PtGen.pt(3);}
-  | '+'{PtGen.pt(64);} nbentier {PtGen.pt(7); PtGen.pt(3);}
-  | '-'{PtGen.pt(64);} nbentier {PtGen.pt(7); PtGen.pt(4);}
+  | '+' nbentier {PtGen.pt(7); PtGen.pt(3);}
+  | '-' nbentier {PtGen.pt(7); PtGen.pt(4);}
   | 'vrai' {PtGen.pt(8); PtGen.pt(5);}
   | 'faux' {PtGen.pt(8); PtGen.pt(6);}
   ;
