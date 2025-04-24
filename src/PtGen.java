@@ -335,86 +335,102 @@ public class PtGen {
 				break;
 			// OU
 			case 11:
+				tCour = BOOL;
 				po.produire(OU);
 				break;
 			// ET
 			case 12:
+			tCour = BOOL;
 				po.produire(ET);
 				break;
 			// NON
 			case 13:
+			tCour = BOOL;
 				po.produire(NON);
 				break;
 			// ==
 			case 14:
+			tCour = BOOL;
 				po.produire(EG);
 				break;
 			// <>
 			case 15:
+			tCour = BOOL;
 				po.produire(DIFF);
 				break;
 			// >
 			case 16:
+			tCour = BOOL;
 				po.produire(SUP);
 				break;
 			// >=
 			case 17:
+			tCour = BOOL;
 				po.produire(SUPEG);
 				break;
 			// <
 			case 18:
+			tCour = BOOL;
 				po.produire(INF);
 				break;
 			// <=
 			case 19:
+			tCour = BOOL;
 				po.produire(INFEG);
 				break;
 			// +
 			case 20:
+			
 				po.produire(ADD);
 				break;
 			// -
 			case 21:
+			
 				po.produire(SOUS);
 				break;
 			// *
 			case 22:
+			
 				po.produire(MUL);
 				break;
 			// div
 			case 23:
+			
 				po.produire(DIV);
 				break;
 
 			// affecter
-			//affecter
-		case 24 :
-		int index2 = presentIdent(1);
-		if(index2 == 0) {UtilLex.messErr("Ident non présent dans tabSymb");}
-		else{
-			if (bc == 1) {
-				pileRep.empiler(tabSymb[index2].info);
-				pileRep.empiler(AFFECTERG);
-			} else {
-				if (tabSymb[index2].categorie == PARAMFIXE) UtilLex.messErr("L'affectation d'un paramètre fixe est interdite");
-				else if (tabSymb[index2].categorie == VARLOCALE) pileRep.empiler(0);
-				else 
-				{
-					pileRep.empiler(1);
-			   
+			// affecter
+			case 24:
+				int index2 = presentIdent(1);
+				if (index2 == 0) {
+					UtilLex.messErr("Ident non présent dans tabSymb");
+				} else {
+					if (bc == 1) {
+						pileRep.empiler(tabSymb[index2].info);
+						pileRep.empiler(AFFECTERG);
+					} else {
+						if (tabSymb[index2].categorie == PARAMFIXE)
+							UtilLex.messErr("L'affectation d'un paramètre fixe est interdite");
+						else if (tabSymb[index2].categorie == VARLOCALE)
+							pileRep.empiler(0);
+						else {
+							pileRep.empiler(1);
+
+						}
+						System.out.println(tabSymb[index2].code + "  index2 " + index2);
+						pileRep.empiler(tabSymb[index2].info);
+						pileRep.empiler(AFFECTERL);
+					}
 				}
-				System.out.println(tabSymb[index2].code + "  index2 " + index2);
-				pileRep.empiler(tabSymb[index2].info);
-				pileRep.empiler(AFFECTERL);
-			}
-		}
-		break;
-	//fin affecter
-	case 25:
-		po.produire(pileRep.depiler());
-		po.produire(pileRep.depiler());
-		if (bc != 1) po.produire(pileRep.depiler());
-	break;
+				break;
+			// fin affecter
+			case 25:
+				po.produire(pileRep.depiler());
+				po.produire(pileRep.depiler());
+				if (bc != 1)
+					po.produire(pileRep.depiler());
+				break;
 
 			// BOUCLE
 			// -------------------------------------------------
@@ -496,11 +512,9 @@ public class PtGen {
 				int ipoAmodifiers = pileRep.depiler();
 				int mems = po.getElt(ipoAmodifiers);
 
-					mems = po.getElt(ipoAmodifiers);
-					po.modifier(ipoAmodifiers, po.getIpo() + 1);
-					ipoAmodifier = mems;
-				
-				
+				mems = po.getElt(ipoAmodifiers);
+				po.modifier(ipoAmodifiers, po.getIpo() + 1);
+				ipoAmodifier = mems;
 
 				break;
 			// LIRE :
